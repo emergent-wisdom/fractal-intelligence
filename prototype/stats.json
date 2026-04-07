@@ -1,0 +1,2115 @@
+{
+  "total_nodes": 456,
+  "total_edges": 582,
+  "total_reuse_events": 730,
+  "top_highways": [
+    {
+      "concept": "MechanismSolver",
+      "times_invoked": 78,
+      "domains": 20,
+      "domain_list": [
+        "economics",
+        "education",
+        "game_design",
+        "healthcare",
+        "urban_planning",
+        "legal_systems",
+        "software_architecture",
+        "ecology",
+        "cooking",
+        "music_composition",
+        "parenting",
+        "corporate_governance",
+        "sports_management",
+        "journalism",
+        "scientific_research",
+        "agriculture",
+        "transportation",
+        "diplomacy",
+        "disaster_response",
+        "architecture"
+      ]
+    },
+    {
+      "concept": "ConstraintSolver",
+      "times_invoked": 51,
+      "domains": 18,
+      "domain_list": [
+        "economics",
+        "education",
+        "game_design",
+        "healthcare",
+        "urban_planning",
+        "legal_systems",
+        "software_architecture",
+        "cooking",
+        "music_composition",
+        "parenting",
+        "corporate_governance",
+        "sports_management",
+        "scientific_research",
+        "agriculture",
+        "transportation",
+        "diplomacy",
+        "disaster_response",
+        "architecture"
+      ]
+    },
+    {
+      "concept": "StakeholderSolver",
+      "times_invoked": 51,
+      "domains": 19,
+      "domain_list": [
+        "economics",
+        "education",
+        "game_design",
+        "healthcare",
+        "urban_planning",
+        "legal_systems",
+        "software_architecture",
+        "ecology",
+        "cooking",
+        "music_composition",
+        "parenting",
+        "corporate_governance",
+        "sports_management",
+        "journalism",
+        "scientific_research",
+        "agriculture",
+        "transportation",
+        "diplomacy",
+        "architecture"
+      ]
+    },
+    {
+      "concept": "DynamicsSolver",
+      "times_invoked": 44,
+      "domains": 17,
+      "domain_list": [
+        "economics",
+        "education",
+        "game_design",
+        "healthcare",
+        "urban_planning",
+        "legal_systems",
+        "software_architecture",
+        "ecology",
+        "cooking",
+        "music_composition",
+        "parenting",
+        "sports_management",
+        "scientific_research",
+        "agriculture",
+        "diplomacy",
+        "disaster_response",
+        "architecture"
+      ]
+    },
+    {
+      "concept": "EvidenceSolver",
+      "times_invoked": 35,
+      "domains": 14,
+      "domain_list": [
+        "economics",
+        "education",
+        "game_design",
+        "healthcare",
+        "legal_systems",
+        "ecology",
+        "music_composition",
+        "corporate_governance",
+        "sports_management",
+        "journalism",
+        "scientific_research",
+        "agriculture",
+        "transportation",
+        "diplomacy"
+      ]
+    },
+    {
+      "concept": "ComponentArchitectureSolver",
+      "times_invoked": 34,
+      "domains": 13,
+      "domain_list": [
+        "economics",
+        "education",
+        "game_design",
+        "healthcare",
+        "urban_planning",
+        "legal_systems",
+        "software_architecture",
+        "ecology",
+        "cooking",
+        "music_composition",
+        "sports_management",
+        "diplomacy",
+        "architecture"
+      ]
+    },
+    {
+      "concept": "IncentiveAlignmentSolver",
+      "times_invoked": 30,
+      "domains": 17,
+      "domain_list": [
+        "economics",
+        "education",
+        "game_design",
+        "healthcare",
+        "urban_planning",
+        "legal_systems",
+        "ecology",
+        "cooking",
+        "parenting",
+        "corporate_governance",
+        "sports_management",
+        "journalism",
+        "scientific_research",
+        "agriculture",
+        "transportation",
+        "diplomacy",
+        "architecture"
+      ]
+    },
+    {
+      "concept": "AdjustmentLoopSolver",
+      "times_invoked": 29,
+      "domains": 15,
+      "domain_list": [
+        "economics",
+        "game_design",
+        "healthcare",
+        "urban_planning",
+        "legal_systems",
+        "software_architecture",
+        "ecology",
+        "cooking",
+        "music_composition",
+        "parenting",
+        "sports_management",
+        "scientific_research",
+        "agriculture",
+        "diplomacy",
+        "architecture"
+      ]
+    },
+    {
+      "concept": "MeaningExtractionSolver",
+      "times_invoked": 24,
+      "domains": 12,
+      "domain_list": [
+        "economics",
+        "education",
+        "game_design",
+        "healthcare",
+        "legal_systems",
+        "cooking",
+        "music_composition",
+        "parenting",
+        "sports_management",
+        "journalism",
+        "scientific_research",
+        "transportation"
+      ]
+    },
+    {
+      "concept": "ResourceCapacitySolver",
+      "times_invoked": 23,
+      "domains": 12,
+      "domain_list": [
+        "economics",
+        "education",
+        "game_design",
+        "healthcare",
+        "urban_planning",
+        "legal_systems",
+        "software_architecture",
+        "cooking",
+        "agriculture",
+        "transportation",
+        "disaster_response",
+        "architecture"
+      ]
+    },
+    {
+      "concept": "InteractionSequenceSolver",
+      "times_invoked": 22,
+      "domains": 11,
+      "domain_list": [
+        "economics",
+        "education",
+        "game_design",
+        "healthcare",
+        "legal_systems",
+        "software_architecture",
+        "cooking",
+        "music_composition",
+        "parenting",
+        "corporate_governance",
+        "journalism"
+      ]
+    },
+    {
+      "concept": "IdentityMappingSolver",
+      "times_invoked": 18,
+      "domains": 11,
+      "domain_list": [
+        "education",
+        "game_design",
+        "healthcare",
+        "urban_planning",
+        "software_architecture",
+        "cooking",
+        "music_composition",
+        "parenting",
+        "corporate_governance",
+        "sports_management",
+        "disaster_response"
+      ]
+    },
+    {
+      "concept": "PerformanceStandardSolver",
+      "times_invoked": 15,
+      "domains": 11,
+      "domain_list": [
+        "economics",
+        "education",
+        "legal_systems",
+        "software_architecture",
+        "cooking",
+        "music_composition",
+        "corporate_governance",
+        "sports_management",
+        "scientific_research",
+        "diplomacy",
+        "disaster_response"
+      ]
+    },
+    {
+      "concept": "ScopeSolver",
+      "times_invoked": 14,
+      "domains": 9,
+      "domain_list": [
+        "economics",
+        "education",
+        "urban_planning",
+        "legal_systems",
+        "software_architecture",
+        "ecology",
+        "scientific_research",
+        "transportation",
+        "architecture"
+      ]
+    },
+    {
+      "concept": "BoundaryLimitSolver",
+      "times_invoked": 14,
+      "domains": 9,
+      "domain_list": [
+        "economics",
+        "urban_planning",
+        "legal_systems",
+        "cooking",
+        "parenting",
+        "corporate_governance",
+        "sports_management",
+        "agriculture",
+        "transportation"
+      ]
+    },
+    {
+      "concept": "GovernanceAuthoritySolver",
+      "times_invoked": 14,
+      "domains": 8,
+      "domain_list": [
+        "economics",
+        "legal_systems",
+        "corporate_governance",
+        "sports_management",
+        "journalism",
+        "scientific_research",
+        "transportation",
+        "diplomacy"
+      ]
+    },
+    {
+      "concept": "InformationCaptureSolver",
+      "times_invoked": 13,
+      "domains": 8,
+      "domain_list": [
+        "healthcare",
+        "legal_systems",
+        "ecology",
+        "music_composition",
+        "corporate_governance",
+        "sports_management",
+        "journalism",
+        "scientific_research"
+      ]
+    },
+    {
+      "concept": "NetworkTopologySolver",
+      "times_invoked": 13,
+      "domains": 7,
+      "domain_list": [
+        "urban_planning",
+        "software_architecture",
+        "ecology",
+        "journalism",
+        "agriculture",
+        "transportation",
+        "disaster_response"
+      ]
+    },
+    {
+      "concept": "DistributionProtocolSolver",
+      "times_invoked": 12,
+      "domains": 10,
+      "domain_list": [
+        "economics",
+        "education",
+        "legal_systems",
+        "software_architecture",
+        "ecology",
+        "journalism",
+        "scientific_research",
+        "agriculture",
+        "diplomacy",
+        "disaster_response"
+      ]
+    },
+    {
+      "concept": "PerspectiveFramingSolver",
+      "times_invoked": 9,
+      "domains": 6,
+      "domain_list": [
+        "economics",
+        "education",
+        "urban_planning",
+        "cooking",
+        "scientific_research",
+        "transportation"
+      ]
+    },
+    {
+      "concept": "SequenceProgressSolver",
+      "times_invoked": 9,
+      "domains": 6,
+      "domain_list": [
+        "education",
+        "software_architecture",
+        "music_composition",
+        "sports_management",
+        "disaster_response",
+        "architecture"
+      ]
+    },
+    {
+      "concept": "GameplayLoopSolver",
+      "times_invoked": 9,
+      "domains": 4,
+      "domain_list": [
+        "game_design",
+        "parenting",
+        "journalism",
+        "architecture"
+      ]
+    },
+    {
+      "concept": "SensoryInterfaceSolver",
+      "times_invoked": 9,
+      "domains": 5,
+      "domain_list": [
+        "healthcare",
+        "software_architecture",
+        "cooking",
+        "music_composition",
+        "architecture"
+      ]
+    },
+    {
+      "concept": "SpatialZoningSolver",
+      "times_invoked": 9,
+      "domains": 5,
+      "domain_list": [
+        "urban_planning",
+        "ecology",
+        "transportation",
+        "disaster_response",
+        "architecture"
+      ]
+    },
+    {
+      "concept": "RealityValidationSolver",
+      "times_invoked": 7,
+      "domains": 4,
+      "domain_list": [
+        "economics",
+        "journalism",
+        "scientific_research",
+        "disaster_response"
+      ]
+    },
+    {
+      "concept": "BoundaryGovernanceSolver",
+      "times_invoked": 7,
+      "domains": 4,
+      "domain_list": [
+        "legal_systems",
+        "software_architecture",
+        "ecology",
+        "diplomacy"
+      ]
+    },
+    {
+      "concept": "StabilityRegulationSolver",
+      "times_invoked": 7,
+      "domains": 5,
+      "domain_list": [
+        "economics",
+        "parenting",
+        "corporate_governance",
+        "sports_management",
+        "disaster_response"
+      ]
+    },
+    {
+      "concept": "SuccessionModelingSolver",
+      "times_invoked": 7,
+      "domains": 4,
+      "domain_list": [
+        "ecology",
+        "corporate_governance",
+        "agriculture",
+        "diplomacy"
+      ]
+    },
+    {
+      "concept": "EconomicBehaviorSolver",
+      "times_invoked": 6,
+      "domains": 4,
+      "domain_list": [
+        "economics",
+        "education",
+        "game_design",
+        "healthcare"
+      ]
+    },
+    {
+      "concept": "InstructionalDesignSolver",
+      "times_invoked": 6,
+      "domains": 4,
+      "domain_list": [
+        "education",
+        "game_design",
+        "healthcare",
+        "cooking"
+      ]
+    }
+  ],
+  "reuse_curve": [
+    {
+      "problem": 1,
+      "domain": "economics",
+      "new_nodes": 8,
+      "reused_nodes": 8,
+      "reuse_pct": 0.5
+    },
+    {
+      "problem": 2,
+      "domain": "economics",
+      "new_nodes": 5,
+      "reused_nodes": 5,
+      "reuse_pct": 0.5
+    },
+    {
+      "problem": 3,
+      "domain": "economics",
+      "new_nodes": 5,
+      "reused_nodes": 5,
+      "reuse_pct": 0.5
+    },
+    {
+      "problem": 4,
+      "domain": "economics",
+      "new_nodes": 6,
+      "reused_nodes": 12,
+      "reuse_pct": 0.667
+    },
+    {
+      "problem": 5,
+      "domain": "economics",
+      "new_nodes": 3,
+      "reused_nodes": 9,
+      "reuse_pct": 0.75
+    },
+    {
+      "problem": 6,
+      "domain": "education",
+      "new_nodes": 9,
+      "reused_nodes": 9,
+      "reuse_pct": 0.5
+    },
+    {
+      "problem": 7,
+      "domain": "education",
+      "new_nodes": 2,
+      "reused_nodes": 6,
+      "reuse_pct": 0.75
+    },
+    {
+      "problem": 8,
+      "domain": "education",
+      "new_nodes": 5,
+      "reused_nodes": 12,
+      "reuse_pct": 0.706
+    },
+    {
+      "problem": 9,
+      "domain": "education",
+      "new_nodes": 5,
+      "reused_nodes": 5,
+      "reuse_pct": 0.5
+    },
+    {
+      "problem": 10,
+      "domain": "education",
+      "new_nodes": 4,
+      "reused_nodes": 6,
+      "reuse_pct": 0.6
+    },
+    {
+      "problem": 11,
+      "domain": "game_design",
+      "new_nodes": 4,
+      "reused_nodes": 8,
+      "reuse_pct": 0.667
+    },
+    {
+      "problem": 12,
+      "domain": "game_design",
+      "new_nodes": 3,
+      "reused_nodes": 7,
+      "reuse_pct": 0.7
+    },
+    {
+      "problem": 13,
+      "domain": "game_design",
+      "new_nodes": 4,
+      "reused_nodes": 8,
+      "reuse_pct": 0.667
+    },
+    {
+      "problem": 14,
+      "domain": "game_design",
+      "new_nodes": 5,
+      "reused_nodes": 7,
+      "reuse_pct": 0.583
+    },
+    {
+      "problem": 15,
+      "domain": "game_design",
+      "new_nodes": 4,
+      "reused_nodes": 8,
+      "reuse_pct": 0.667
+    },
+    {
+      "problem": 16,
+      "domain": "healthcare",
+      "new_nodes": 4,
+      "reused_nodes": 9,
+      "reuse_pct": 0.692
+    },
+    {
+      "problem": 17,
+      "domain": "healthcare",
+      "new_nodes": 3,
+      "reused_nodes": 11,
+      "reuse_pct": 0.786
+    },
+    {
+      "problem": 18,
+      "domain": "healthcare",
+      "new_nodes": 5,
+      "reused_nodes": 11,
+      "reuse_pct": 0.688
+    },
+    {
+      "problem": 19,
+      "domain": "healthcare",
+      "new_nodes": 4,
+      "reused_nodes": 5,
+      "reuse_pct": 0.556
+    },
+    {
+      "problem": 20,
+      "domain": "healthcare",
+      "new_nodes": 5,
+      "reused_nodes": 9,
+      "reuse_pct": 0.643
+    },
+    {
+      "problem": 21,
+      "domain": "urban_planning",
+      "new_nodes": 5,
+      "reused_nodes": 7,
+      "reuse_pct": 0.583
+    },
+    {
+      "problem": 22,
+      "domain": "urban_planning",
+      "new_nodes": 3,
+      "reused_nodes": 5,
+      "reuse_pct": 0.625
+    },
+    {
+      "problem": 23,
+      "domain": "urban_planning",
+      "new_nodes": 3,
+      "reused_nodes": 8,
+      "reuse_pct": 0.727
+    },
+    {
+      "problem": 24,
+      "domain": "urban_planning",
+      "new_nodes": 5,
+      "reused_nodes": 13,
+      "reuse_pct": 0.722
+    },
+    {
+      "problem": 25,
+      "domain": "urban_planning",
+      "new_nodes": 4,
+      "reused_nodes": 10,
+      "reuse_pct": 0.714
+    },
+    {
+      "problem": 26,
+      "domain": "legal_systems",
+      "new_nodes": 7,
+      "reused_nodes": 5,
+      "reuse_pct": 0.417
+    },
+    {
+      "problem": 27,
+      "domain": "legal_systems",
+      "new_nodes": 8,
+      "reused_nodes": 8,
+      "reuse_pct": 0.5
+    },
+    {
+      "problem": 28,
+      "domain": "legal_systems",
+      "new_nodes": 4,
+      "reused_nodes": 10,
+      "reuse_pct": 0.714
+    },
+    {
+      "problem": 29,
+      "domain": "legal_systems",
+      "new_nodes": 3,
+      "reused_nodes": 9,
+      "reuse_pct": 0.75
+    },
+    {
+      "problem": 30,
+      "domain": "legal_systems",
+      "new_nodes": 4,
+      "reused_nodes": 12,
+      "reuse_pct": 0.75
+    },
+    {
+      "problem": 31,
+      "domain": "software_architecture",
+      "new_nodes": 6,
+      "reused_nodes": 6,
+      "reuse_pct": 0.5
+    },
+    {
+      "problem": 32,
+      "domain": "software_architecture",
+      "new_nodes": 3,
+      "reused_nodes": 5,
+      "reuse_pct": 0.625
+    },
+    {
+      "problem": 33,
+      "domain": "software_architecture",
+      "new_nodes": 3,
+      "reused_nodes": 7,
+      "reuse_pct": 0.7
+    },
+    {
+      "problem": 34,
+      "domain": "software_architecture",
+      "new_nodes": 4,
+      "reused_nodes": 9,
+      "reuse_pct": 0.692
+    },
+    {
+      "problem": 35,
+      "domain": "software_architecture",
+      "new_nodes": 4,
+      "reused_nodes": 7,
+      "reuse_pct": 0.636
+    },
+    {
+      "problem": 36,
+      "domain": "ecology",
+      "new_nodes": 2,
+      "reused_nodes": 6,
+      "reuse_pct": 0.75
+    },
+    {
+      "problem": 37,
+      "domain": "ecology",
+      "new_nodes": 5,
+      "reused_nodes": 5,
+      "reuse_pct": 0.5
+    },
+    {
+      "problem": 38,
+      "domain": "ecology",
+      "new_nodes": 4,
+      "reused_nodes": 5,
+      "reuse_pct": 0.556
+    },
+    {
+      "problem": 39,
+      "domain": "ecology",
+      "new_nodes": 1,
+      "reused_nodes": 9,
+      "reuse_pct": 0.9
+    },
+    {
+      "problem": 40,
+      "domain": "ecology",
+      "new_nodes": 5,
+      "reused_nodes": 9,
+      "reuse_pct": 0.643
+    },
+    {
+      "problem": 41,
+      "domain": "cooking",
+      "new_nodes": 4,
+      "reused_nodes": 6,
+      "reuse_pct": 0.6
+    },
+    {
+      "problem": 42,
+      "domain": "cooking",
+      "new_nodes": 4,
+      "reused_nodes": 6,
+      "reuse_pct": 0.6
+    },
+    {
+      "problem": 43,
+      "domain": "cooking",
+      "new_nodes": 4,
+      "reused_nodes": 4,
+      "reuse_pct": 0.5
+    },
+    {
+      "problem": 44,
+      "domain": "cooking",
+      "new_nodes": 3,
+      "reused_nodes": 7,
+      "reuse_pct": 0.7
+    },
+    {
+      "problem": 45,
+      "domain": "cooking",
+      "new_nodes": 4,
+      "reused_nodes": 5,
+      "reuse_pct": 0.556
+    },
+    {
+      "problem": 46,
+      "domain": "music_composition",
+      "new_nodes": 3,
+      "reused_nodes": 5,
+      "reuse_pct": 0.625
+    },
+    {
+      "problem": 47,
+      "domain": "music_composition",
+      "new_nodes": 2,
+      "reused_nodes": 8,
+      "reuse_pct": 0.8
+    },
+    {
+      "problem": 48,
+      "domain": "music_composition",
+      "new_nodes": 3,
+      "reused_nodes": 9,
+      "reuse_pct": 0.75
+    },
+    {
+      "problem": 49,
+      "domain": "music_composition",
+      "new_nodes": 5,
+      "reused_nodes": 6,
+      "reuse_pct": 0.545
+    },
+    {
+      "problem": 50,
+      "domain": "music_composition",
+      "new_nodes": 2,
+      "reused_nodes": 10,
+      "reuse_pct": 0.833
+    },
+    {
+      "problem": 51,
+      "domain": "parenting",
+      "new_nodes": 4,
+      "reused_nodes": 4,
+      "reuse_pct": 0.5
+    },
+    {
+      "problem": 52,
+      "domain": "parenting",
+      "new_nodes": 6,
+      "reused_nodes": 12,
+      "reuse_pct": 0.667
+    },
+    {
+      "problem": 53,
+      "domain": "parenting",
+      "new_nodes": 1,
+      "reused_nodes": 7,
+      "reuse_pct": 0.875
+    },
+    {
+      "problem": 54,
+      "domain": "parenting",
+      "new_nodes": 3,
+      "reused_nodes": 8,
+      "reuse_pct": 0.727
+    },
+    {
+      "problem": 55,
+      "domain": "parenting",
+      "new_nodes": 4,
+      "reused_nodes": 10,
+      "reuse_pct": 0.714
+    },
+    {
+      "problem": 56,
+      "domain": "corporate_governance",
+      "new_nodes": 6,
+      "reused_nodes": 3,
+      "reuse_pct": 0.333
+    },
+    {
+      "problem": 57,
+      "domain": "corporate_governance",
+      "new_nodes": 4,
+      "reused_nodes": 9,
+      "reuse_pct": 0.692
+    },
+    {
+      "problem": 58,
+      "domain": "corporate_governance",
+      "new_nodes": 4,
+      "reused_nodes": 4,
+      "reuse_pct": 0.5
+    },
+    {
+      "problem": 59,
+      "domain": "corporate_governance",
+      "new_nodes": 5,
+      "reused_nodes": 4,
+      "reuse_pct": 0.444
+    },
+    {
+      "problem": 60,
+      "domain": "corporate_governance",
+      "new_nodes": 4,
+      "reused_nodes": 7,
+      "reuse_pct": 0.636
+    },
+    {
+      "problem": 61,
+      "domain": "sports_management",
+      "new_nodes": 6,
+      "reused_nodes": 6,
+      "reuse_pct": 0.5
+    },
+    {
+      "problem": 62,
+      "domain": "sports_management",
+      "new_nodes": 4,
+      "reused_nodes": 10,
+      "reuse_pct": 0.714
+    },
+    {
+      "problem": 63,
+      "domain": "sports_management",
+      "new_nodes": 2,
+      "reused_nodes": 8,
+      "reuse_pct": 0.8
+    },
+    {
+      "problem": 64,
+      "domain": "sports_management",
+      "new_nodes": 6,
+      "reused_nodes": 11,
+      "reuse_pct": 0.647
+    },
+    {
+      "problem": 65,
+      "domain": "sports_management",
+      "new_nodes": 3,
+      "reused_nodes": 5,
+      "reuse_pct": 0.625
+    },
+    {
+      "problem": 66,
+      "domain": "journalism",
+      "new_nodes": 2,
+      "reused_nodes": 5,
+      "reuse_pct": 0.714
+    },
+    {
+      "problem": 67,
+      "domain": "journalism",
+      "new_nodes": 2,
+      "reused_nodes": 12,
+      "reuse_pct": 0.857
+    },
+    {
+      "problem": 68,
+      "domain": "journalism",
+      "new_nodes": 7,
+      "reused_nodes": 3,
+      "reuse_pct": 0.3
+    },
+    {
+      "problem": 69,
+      "domain": "journalism",
+      "new_nodes": 3,
+      "reused_nodes": 12,
+      "reuse_pct": 0.8
+    },
+    {
+      "problem": 70,
+      "domain": "journalism",
+      "new_nodes": 3,
+      "reused_nodes": 6,
+      "reuse_pct": 0.667
+    },
+    {
+      "problem": 71,
+      "domain": "scientific_research",
+      "new_nodes": 4,
+      "reused_nodes": 6,
+      "reuse_pct": 0.6
+    },
+    {
+      "problem": 72,
+      "domain": "scientific_research",
+      "new_nodes": 2,
+      "reused_nodes": 8,
+      "reuse_pct": 0.8
+    },
+    {
+      "problem": 73,
+      "domain": "scientific_research",
+      "new_nodes": 3,
+      "reused_nodes": 5,
+      "reuse_pct": 0.625
+    },
+    {
+      "problem": 74,
+      "domain": "scientific_research",
+      "new_nodes": 6,
+      "reused_nodes": 6,
+      "reuse_pct": 0.5
+    },
+    {
+      "problem": 75,
+      "domain": "scientific_research",
+      "new_nodes": 6,
+      "reused_nodes": 4,
+      "reuse_pct": 0.4
+    },
+    {
+      "problem": 76,
+      "domain": "agriculture",
+      "new_nodes": 3,
+      "reused_nodes": 4,
+      "reuse_pct": 0.571
+    },
+    {
+      "problem": 77,
+      "domain": "agriculture",
+      "new_nodes": 2,
+      "reused_nodes": 8,
+      "reuse_pct": 0.8
+    },
+    {
+      "problem": 78,
+      "domain": "agriculture",
+      "new_nodes": 4,
+      "reused_nodes": 9,
+      "reuse_pct": 0.692
+    },
+    {
+      "problem": 79,
+      "domain": "agriculture",
+      "new_nodes": 2,
+      "reused_nodes": 8,
+      "reuse_pct": 0.8
+    },
+    {
+      "problem": 80,
+      "domain": "agriculture",
+      "new_nodes": 2,
+      "reused_nodes": 9,
+      "reuse_pct": 0.818
+    },
+    {
+      "problem": 81,
+      "domain": "transportation",
+      "new_nodes": 5,
+      "reused_nodes": 10,
+      "reuse_pct": 0.667
+    },
+    {
+      "problem": 82,
+      "domain": "transportation",
+      "new_nodes": 3,
+      "reused_nodes": 4,
+      "reuse_pct": 0.571
+    },
+    {
+      "problem": 83,
+      "domain": "transportation",
+      "new_nodes": 2,
+      "reused_nodes": 6,
+      "reuse_pct": 0.75
+    },
+    {
+      "problem": 84,
+      "domain": "transportation",
+      "new_nodes": 4,
+      "reused_nodes": 8,
+      "reuse_pct": 0.667
+    },
+    {
+      "problem": 85,
+      "domain": "transportation",
+      "new_nodes": 4,
+      "reused_nodes": 7,
+      "reuse_pct": 0.636
+    },
+    {
+      "problem": 86,
+      "domain": "diplomacy",
+      "new_nodes": 2,
+      "reused_nodes": 8,
+      "reuse_pct": 0.8
+    },
+    {
+      "problem": 87,
+      "domain": "diplomacy",
+      "new_nodes": 4,
+      "reused_nodes": 12,
+      "reuse_pct": 0.75
+    },
+    {
+      "problem": 88,
+      "domain": "diplomacy",
+      "new_nodes": 3,
+      "reused_nodes": 7,
+      "reuse_pct": 0.7
+    },
+    {
+      "problem": 89,
+      "domain": "diplomacy",
+      "new_nodes": 2,
+      "reused_nodes": 9,
+      "reuse_pct": 0.818
+    },
+    {
+      "problem": 90,
+      "domain": "diplomacy",
+      "new_nodes": 7,
+      "reused_nodes": 5,
+      "reuse_pct": 0.417
+    },
+    {
+      "problem": 91,
+      "domain": "disaster_response",
+      "new_nodes": 6,
+      "reused_nodes": 4,
+      "reuse_pct": 0.4
+    },
+    {
+      "problem": 92,
+      "domain": "disaster_response",
+      "new_nodes": 2,
+      "reused_nodes": 5,
+      "reuse_pct": 0.714
+    },
+    {
+      "problem": 93,
+      "domain": "disaster_response",
+      "new_nodes": 6,
+      "reused_nodes": 4,
+      "reuse_pct": 0.4
+    },
+    {
+      "problem": 94,
+      "domain": "disaster_response",
+      "new_nodes": 3,
+      "reused_nodes": 3,
+      "reuse_pct": 0.5
+    },
+    {
+      "problem": 95,
+      "domain": "disaster_response",
+      "new_nodes": 6,
+      "reused_nodes": 10,
+      "reuse_pct": 0.625
+    },
+    {
+      "problem": 96,
+      "domain": "architecture",
+      "new_nodes": 3,
+      "reused_nodes": 7,
+      "reuse_pct": 0.7
+    },
+    {
+      "problem": 97,
+      "domain": "architecture",
+      "new_nodes": 7,
+      "reused_nodes": 6,
+      "reuse_pct": 0.462
+    },
+    {
+      "problem": 98,
+      "domain": "architecture",
+      "new_nodes": 2,
+      "reused_nodes": 6,
+      "reuse_pct": 0.75
+    },
+    {
+      "problem": 99,
+      "domain": "architecture",
+      "new_nodes": 3,
+      "reused_nodes": 5,
+      "reuse_pct": 0.625
+    },
+    {
+      "problem": 100,
+      "domain": "architecture",
+      "new_nodes": 5,
+      "reused_nodes": 10,
+      "reuse_pct": 0.667
+    }
+  ],
+  "rolling_reuse": [
+    {
+      "problem": 1,
+      "rolling_avg": 0.5
+    },
+    {
+      "problem": 2,
+      "rolling_avg": 0.5
+    },
+    {
+      "problem": 3,
+      "rolling_avg": 0.5
+    },
+    {
+      "problem": 4,
+      "rolling_avg": 0.542
+    },
+    {
+      "problem": 5,
+      "rolling_avg": 0.583
+    },
+    {
+      "problem": 6,
+      "rolling_avg": 0.57
+    },
+    {
+      "problem": 7,
+      "rolling_avg": 0.595
+    },
+    {
+      "problem": 8,
+      "rolling_avg": 0.609
+    },
+    {
+      "problem": 9,
+      "rolling_avg": 0.597
+    },
+    {
+      "problem": 10,
+      "rolling_avg": 0.597
+    },
+    {
+      "problem": 11,
+      "rolling_avg": 0.614
+    },
+    {
+      "problem": 12,
+      "rolling_avg": 0.634
+    },
+    {
+      "problem": 13,
+      "rolling_avg": 0.651
+    },
+    {
+      "problem": 14,
+      "rolling_avg": 0.642
+    },
+    {
+      "problem": 15,
+      "rolling_avg": 0.634
+    },
+    {
+      "problem": 16,
+      "rolling_avg": 0.653
+    },
+    {
+      "problem": 17,
+      "rolling_avg": 0.657
+    },
+    {
+      "problem": 18,
+      "rolling_avg": 0.655
+    },
+    {
+      "problem": 19,
+      "rolling_avg": 0.661
+    },
+    {
+      "problem": 20,
+      "rolling_avg": 0.665
+    },
+    {
+      "problem": 21,
+      "rolling_avg": 0.656
+    },
+    {
+      "problem": 22,
+      "rolling_avg": 0.649
+    },
+    {
+      "problem": 23,
+      "rolling_avg": 0.655
+    },
+    {
+      "problem": 24,
+      "rolling_avg": 0.669
+    },
+    {
+      "problem": 25,
+      "rolling_avg": 0.674
+    },
+    {
+      "problem": 26,
+      "rolling_avg": 0.646
+    },
+    {
+      "problem": 27,
+      "rolling_avg": 0.617
+    },
+    {
+      "problem": 28,
+      "rolling_avg": 0.62
+    },
+    {
+      "problem": 29,
+      "rolling_avg": 0.639
+    },
+    {
+      "problem": 30,
+      "rolling_avg": 0.65
+    },
+    {
+      "problem": 31,
+      "rolling_avg": 0.642
+    },
+    {
+      "problem": 32,
+      "rolling_avg": 0.642
+    },
+    {
+      "problem": 33,
+      "rolling_avg": 0.639
+    },
+    {
+      "problem": 34,
+      "rolling_avg": 0.636
+    },
+    {
+      "problem": 35,
+      "rolling_avg": 0.628
+    },
+    {
+      "problem": 36,
+      "rolling_avg": 0.662
+    },
+    {
+      "problem": 37,
+      "rolling_avg": 0.662
+    },
+    {
+      "problem": 38,
+      "rolling_avg": 0.646
+    },
+    {
+      "problem": 39,
+      "rolling_avg": 0.661
+    },
+    {
+      "problem": 40,
+      "rolling_avg": 0.65
+    },
+    {
+      "problem": 41,
+      "rolling_avg": 0.66
+    },
+    {
+      "problem": 42,
+      "rolling_avg": 0.658
+    },
+    {
+      "problem": 43,
+      "rolling_avg": 0.638
+    },
+    {
+      "problem": 44,
+      "rolling_avg": 0.638
+    },
+    {
+      "problem": 45,
+      "rolling_avg": 0.63
+    },
+    {
+      "problem": 46,
+      "rolling_avg": 0.618
+    },
+    {
+      "problem": 47,
+      "rolling_avg": 0.648
+    },
+    {
+      "problem": 48,
+      "rolling_avg": 0.667
+    },
+    {
+      "problem": 49,
+      "rolling_avg": 0.632
+    },
+    {
+      "problem": 50,
+      "rolling_avg": 0.651
+    },
+    {
+      "problem": 51,
+      "rolling_avg": 0.641
+    },
+    {
+      "problem": 52,
+      "rolling_avg": 0.648
+    },
+    {
+      "problem": 53,
+      "rolling_avg": 0.685
+    },
+    {
+      "problem": 54,
+      "rolling_avg": 0.688
+    },
+    {
+      "problem": 55,
+      "rolling_avg": 0.704
+    },
+    {
+      "problem": 56,
+      "rolling_avg": 0.674
+    },
+    {
+      "problem": 57,
+      "rolling_avg": 0.664
+    },
+    {
+      "problem": 58,
+      "rolling_avg": 0.639
+    },
+    {
+      "problem": 59,
+      "rolling_avg": 0.629
+    },
+    {
+      "problem": 60,
+      "rolling_avg": 0.609
+    },
+    {
+      "problem": 61,
+      "rolling_avg": 0.609
+    },
+    {
+      "problem": 62,
+      "rolling_avg": 0.613
+    },
+    {
+      "problem": 63,
+      "rolling_avg": 0.606
+    },
+    {
+      "problem": 64,
+      "rolling_avg": 0.598
+    },
+    {
+      "problem": 65,
+      "rolling_avg": 0.589
+    },
+    {
+      "problem": 66,
+      "rolling_avg": 0.627
+    },
+    {
+      "problem": 67,
+      "rolling_avg": 0.644
+    },
+    {
+      "problem": 68,
+      "rolling_avg": 0.624
+    },
+    {
+      "problem": 69,
+      "rolling_avg": 0.659
+    },
+    {
+      "problem": 70,
+      "rolling_avg": 0.662
+    },
+    {
+      "problem": 71,
+      "rolling_avg": 0.672
+    },
+    {
+      "problem": 72,
+      "rolling_avg": 0.681
+    },
+    {
+      "problem": 73,
+      "rolling_avg": 0.663
+    },
+    {
+      "problem": 74,
+      "rolling_avg": 0.649
+    },
+    {
+      "problem": 75,
+      "rolling_avg": 0.626
+    },
+    {
+      "problem": 76,
+      "rolling_avg": 0.612
+    },
+    {
+      "problem": 77,
+      "rolling_avg": 0.606
+    },
+    {
+      "problem": 78,
+      "rolling_avg": 0.645
+    },
+    {
+      "problem": 79,
+      "rolling_avg": 0.645
+    },
+    {
+      "problem": 80,
+      "rolling_avg": 0.661
+    },
+    {
+      "problem": 81,
+      "rolling_avg": 0.667
+    },
+    {
+      "problem": 82,
+      "rolling_avg": 0.644
+    },
+    {
+      "problem": 83,
+      "rolling_avg": 0.657
+    },
+    {
+      "problem": 84,
+      "rolling_avg": 0.674
+    },
+    {
+      "problem": 85,
+      "rolling_avg": 0.697
+    },
+    {
+      "problem": 86,
+      "rolling_avg": 0.72
+    },
+    {
+      "problem": 87,
+      "rolling_avg": 0.715
+    },
+    {
+      "problem": 88,
+      "rolling_avg": 0.716
+    },
+    {
+      "problem": 89,
+      "rolling_avg": 0.718
+    },
+    {
+      "problem": 90,
+      "rolling_avg": 0.678
+    },
+    {
+      "problem": 91,
+      "rolling_avg": 0.651
+    },
+    {
+      "problem": 92,
+      "rolling_avg": 0.665
+    },
+    {
+      "problem": 93,
+      "rolling_avg": 0.63
+    },
+    {
+      "problem": 94,
+      "rolling_avg": 0.613
+    },
+    {
+      "problem": 95,
+      "rolling_avg": 0.612
+    },
+    {
+      "problem": 96,
+      "rolling_avg": 0.602
+    },
+    {
+      "problem": 97,
+      "rolling_avg": 0.574
+    },
+    {
+      "problem": 98,
+      "rolling_avg": 0.579
+    },
+    {
+      "problem": 99,
+      "rolling_avg": 0.559
+    },
+    {
+      "problem": 100,
+      "rolling_avg": 0.584
+    }
+  ],
+  "budget_allocation": [
+    {
+      "problem": 1,
+      "budget": 16,
+      "spent": 16
+    },
+    {
+      "problem": 2,
+      "budget": 10,
+      "spent": 10
+    },
+    {
+      "problem": 3,
+      "budget": 10,
+      "spent": 10
+    },
+    {
+      "problem": 4,
+      "budget": 25,
+      "spent": 18
+    },
+    {
+      "problem": 5,
+      "budget": 12,
+      "spent": 12
+    },
+    {
+      "problem": 6,
+      "budget": 25,
+      "spent": 18
+    },
+    {
+      "problem": 7,
+      "budget": 8,
+      "spent": 8
+    },
+    {
+      "problem": 8,
+      "budget": 25,
+      "spent": 17
+    },
+    {
+      "problem": 9,
+      "budget": 20,
+      "spent": 10
+    },
+    {
+      "problem": 10,
+      "budget": 10,
+      "spent": 10
+    },
+    {
+      "problem": 11,
+      "budget": 12,
+      "spent": 12
+    },
+    {
+      "problem": 12,
+      "budget": 10,
+      "spent": 10
+    },
+    {
+      "problem": 13,
+      "budget": 12,
+      "spent": 12
+    },
+    {
+      "problem": 14,
+      "budget": 12,
+      "spent": 12
+    },
+    {
+      "problem": 15,
+      "budget": 12,
+      "spent": 12
+    },
+    {
+      "problem": 16,
+      "budget": 16,
+      "spent": 13
+    },
+    {
+      "problem": 17,
+      "budget": 20,
+      "spent": 14
+    },
+    {
+      "problem": 18,
+      "budget": 16,
+      "spent": 16
+    },
+    {
+      "problem": 19,
+      "budget": 14,
+      "spent": 9
+    },
+    {
+      "problem": 20,
+      "budget": 14,
+      "spent": 14
+    },
+    {
+      "problem": 21,
+      "budget": 25,
+      "spent": 12
+    },
+    {
+      "problem": 22,
+      "budget": 8,
+      "spent": 8
+    },
+    {
+      "problem": 23,
+      "budget": 12,
+      "spent": 11
+    },
+    {
+      "problem": 24,
+      "budget": 20,
+      "spent": 18
+    },
+    {
+      "problem": 25,
+      "budget": 14,
+      "spent": 14
+    },
+    {
+      "problem": 26,
+      "budget": 12,
+      "spent": 12
+    },
+    {
+      "problem": 27,
+      "budget": 25,
+      "spent": 16
+    },
+    {
+      "problem": 28,
+      "budget": 20,
+      "spent": 14
+    },
+    {
+      "problem": 29,
+      "budget": 12,
+      "spent": 12
+    },
+    {
+      "problem": 30,
+      "budget": 16,
+      "spent": 16
+    },
+    {
+      "problem": 31,
+      "budget": 16,
+      "spent": 12
+    },
+    {
+      "problem": 32,
+      "budget": 8,
+      "spent": 8
+    },
+    {
+      "problem": 33,
+      "budget": 10,
+      "spent": 10
+    },
+    {
+      "problem": 34,
+      "budget": 14,
+      "spent": 13
+    },
+    {
+      "problem": 35,
+      "budget": 12,
+      "spent": 11
+    },
+    {
+      "problem": 36,
+      "budget": 10,
+      "spent": 8
+    },
+    {
+      "problem": 37,
+      "budget": 10,
+      "spent": 10
+    },
+    {
+      "problem": 38,
+      "budget": 10,
+      "spent": 9
+    },
+    {
+      "problem": 39,
+      "budget": 10,
+      "spent": 10
+    },
+    {
+      "problem": 40,
+      "budget": 14,
+      "spent": 14
+    },
+    {
+      "problem": 41,
+      "budget": 10,
+      "spent": 10
+    },
+    {
+      "problem": 42,
+      "budget": 10,
+      "spent": 10
+    },
+    {
+      "problem": 43,
+      "budget": 25,
+      "spent": 8
+    },
+    {
+      "problem": 44,
+      "budget": 10,
+      "spent": 10
+    },
+    {
+      "problem": 45,
+      "budget": 25,
+      "spent": 9
+    },
+    {
+      "problem": 46,
+      "budget": 8,
+      "spent": 8
+    },
+    {
+      "problem": 47,
+      "budget": 16,
+      "spent": 10
+    },
+    {
+      "problem": 48,
+      "budget": 12,
+      "spent": 12
+    },
+    {
+      "problem": 49,
+      "budget": 25,
+      "spent": 11
+    },
+    {
+      "problem": 50,
+      "budget": 12,
+      "spent": 12
+    },
+    {
+      "problem": 51,
+      "budget": 8,
+      "spent": 8
+    },
+    {
+      "problem": 52,
+      "budget": 18,
+      "spent": 18
+    },
+    {
+      "problem": 53,
+      "budget": 25,
+      "spent": 8
+    },
+    {
+      "problem": 54,
+      "budget": 25,
+      "spent": 11
+    },
+    {
+      "problem": 55,
+      "budget": 16,
+      "spent": 14
+    },
+    {
+      "problem": 56,
+      "budget": 18,
+      "spent": 9
+    },
+    {
+      "problem": 57,
+      "budget": 20,
+      "spent": 13
+    },
+    {
+      "problem": 58,
+      "budget": 16,
+      "spent": 8
+    },
+    {
+      "problem": 59,
+      "budget": 16,
+      "spent": 9
+    },
+    {
+      "problem": 60,
+      "budget": 12,
+      "spent": 11
+    },
+    {
+      "problem": 61,
+      "budget": 12,
+      "spent": 12
+    },
+    {
+      "problem": 62,
+      "budget": 16,
+      "spent": 14
+    },
+    {
+      "problem": 63,
+      "budget": 10,
+      "spent": 10
+    },
+    {
+      "problem": 64,
+      "budget": 18,
+      "spent": 17
+    },
+    {
+      "problem": 65,
+      "budget": 8,
+      "spent": 8
+    },
+    {
+      "problem": 66,
+      "budget": 10,
+      "spent": 7
+    },
+    {
+      "problem": 67,
+      "budget": 14,
+      "spent": 14
+    },
+    {
+      "problem": 68,
+      "budget": 16,
+      "spent": 10
+    },
+    {
+      "problem": 69,
+      "budget": 25,
+      "spent": 15
+    },
+    {
+      "problem": 70,
+      "budget": 10,
+      "spent": 9
+    },
+    {
+      "problem": 71,
+      "budget": 10,
+      "spent": 10
+    },
+    {
+      "problem": 72,
+      "budget": 10,
+      "spent": 10
+    },
+    {
+      "problem": 73,
+      "budget": 8,
+      "spent": 8
+    },
+    {
+      "problem": 74,
+      "budget": 12,
+      "spent": 12
+    },
+    {
+      "problem": 75,
+      "budget": 10,
+      "spent": 10
+    },
+    {
+      "problem": 76,
+      "budget": 14,
+      "spent": 7
+    },
+    {
+      "problem": 77,
+      "budget": 10,
+      "spent": 10
+    },
+    {
+      "problem": 78,
+      "budget": 18,
+      "spent": 13
+    },
+    {
+      "problem": 79,
+      "budget": 10,
+      "spent": 10
+    },
+    {
+      "problem": 80,
+      "budget": 14,
+      "spent": 11
+    },
+    {
+      "problem": 81,
+      "budget": 25,
+      "spent": 15
+    },
+    {
+      "problem": 82,
+      "budget": 10,
+      "spent": 7
+    },
+    {
+      "problem": 83,
+      "budget": 8,
+      "spent": 8
+    },
+    {
+      "problem": 84,
+      "budget": 14,
+      "spent": 12
+    },
+    {
+      "problem": 85,
+      "budget": 18,
+      "spent": 11
+    },
+    {
+      "problem": 86,
+      "budget": 10,
+      "spent": 10
+    },
+    {
+      "problem": 87,
+      "budget": 16,
+      "spent": 16
+    },
+    {
+      "problem": 88,
+      "budget": 10,
+      "spent": 10
+    },
+    {
+      "problem": 89,
+      "budget": 14,
+      "spent": 11
+    },
+    {
+      "problem": 90,
+      "budget": 12,
+      "spent": 12
+    },
+    {
+      "problem": 91,
+      "budget": 20,
+      "spent": 10
+    },
+    {
+      "problem": 92,
+      "budget": 10,
+      "spent": 7
+    },
+    {
+      "problem": 93,
+      "budget": 10,
+      "spent": 10
+    },
+    {
+      "problem": 94,
+      "budget": 16,
+      "spent": 6
+    },
+    {
+      "problem": 95,
+      "budget": 16,
+      "spent": 16
+    },
+    {
+      "problem": 96,
+      "budget": 10,
+      "spent": 10
+    },
+    {
+      "problem": 97,
+      "budget": 14,
+      "spent": 13
+    },
+    {
+      "problem": 98,
+      "budget": 8,
+      "spent": 8
+    },
+    {
+      "problem": 99,
+      "budget": 8,
+      "spent": 8
+    },
+    {
+      "problem": 100,
+      "budget": 20,
+      "spent": 15
+    }
+  ]
+}

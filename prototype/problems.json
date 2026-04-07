@@ -1,0 +1,502 @@
+[
+  {
+    "id": 1,
+    "domain": "economics",
+    "problem": "Design a tax system for a developing nation"
+  },
+  {
+    "id": 2,
+    "domain": "economics",
+    "problem": "Design a pricing strategy for a new SaaS product entering a competitive market"
+  },
+  {
+    "id": 3,
+    "domain": "economics",
+    "problem": "Create a commodity exchange for a regional agricultural cooperative"
+  },
+  {
+    "id": 4,
+    "domain": "economics",
+    "problem": "Stabilize a currency during hyperinflation"
+  },
+  {
+    "id": 5,
+    "domain": "economics",
+    "problem": "Design a universal basic income pilot program"
+  },
+  {
+    "id": 6,
+    "domain": "education",
+    "problem": "Design a curriculum for teaching critical thinking to 12-year-olds"
+  },
+  {
+    "id": 7,
+    "domain": "education",
+    "problem": "Retrain coal miners for renewable energy jobs"
+  },
+  {
+    "id": 8,
+    "domain": "education",
+    "problem": "Build an assessment system that measures creativity"
+  },
+  {
+    "id": 9,
+    "domain": "education",
+    "problem": "Design a literacy program for adults in rural India"
+  },
+  {
+    "id": 10,
+    "domain": "education",
+    "problem": "Create a mentorship structure for first-generation college students"
+  },
+  {
+    "id": 11,
+    "domain": "game_design",
+    "problem": "Design a strategy game that teaches economics"
+  },
+  {
+    "id": 12,
+    "domain": "game_design",
+    "problem": "Create a cooperative board game about building a space colony"
+  },
+  {
+    "id": 13,
+    "domain": "game_design",
+    "problem": "Design a roguelike that adapts to player skill in real time"
+  },
+  {
+    "id": 14,
+    "domain": "game_design",
+    "problem": "Build a social deduction game for 3 players"
+  },
+  {
+    "id": 15,
+    "domain": "game_design",
+    "problem": "Design a hospital triage simulation game for medical students"
+  },
+  {
+    "id": 16,
+    "domain": "healthcare",
+    "problem": "Reduce hospital readmission rates for heart failure patients"
+  },
+  {
+    "id": 17,
+    "domain": "healthcare",
+    "problem": "Design a triage protocol for a rural emergency room"
+  },
+  {
+    "id": 18,
+    "domain": "healthcare",
+    "problem": "Build a mental health screening system for university students"
+  },
+  {
+    "id": 19,
+    "domain": "healthcare",
+    "problem": "Create a medication adherence program for elderly patients"
+  },
+  {
+    "id": 20,
+    "domain": "healthcare",
+    "problem": "Design a pandemic early warning system for a city"
+  },
+  {
+    "id": 21,
+    "domain": "urban_planning",
+    "problem": "Redesign a downtown area to be car-free"
+  },
+  {
+    "id": 22,
+    "domain": "urban_planning",
+    "problem": "Plan affordable housing for a city of 2 million"
+  },
+  {
+    "id": 23,
+    "domain": "urban_planning",
+    "problem": "Design a public transit system for a sprawling suburb"
+  },
+  {
+    "id": 24,
+    "domain": "urban_planning",
+    "problem": "Create a green infrastructure plan for flood-prone neighborhoods"
+  },
+  {
+    "id": 25,
+    "domain": "urban_planning",
+    "problem": "Revitalize a post-industrial waterfront district"
+  },
+  {
+    "id": 26,
+    "domain": "legal_systems",
+    "problem": "Design a mediation system for commercial contract disputes"
+  },
+  {
+    "id": 27,
+    "domain": "legal_systems",
+    "problem": "Create a regulatory framework for autonomous vehicles"
+  },
+  {
+    "id": 28,
+    "domain": "legal_systems",
+    "problem": "Design a scheduling system that fairly allocates operating room time"
+  },
+  {
+    "id": 29,
+    "domain": "legal_systems",
+    "problem": "Design intellectual property rules for AI-generated art"
+  },
+  {
+    "id": 30,
+    "domain": "legal_systems",
+    "problem": "Build a dispute resolution system for international water rights"
+  },
+  {
+    "id": 31,
+    "domain": "software_architecture",
+    "problem": "Migrate a monolith to microservices without downtime"
+  },
+  {
+    "id": 32,
+    "domain": "software_architecture",
+    "problem": "Design an event-driven system for real-time financial trading"
+  },
+  {
+    "id": 33,
+    "domain": "software_architecture",
+    "problem": "Build a multi-tenant SaaS platform with data isolation"
+  },
+  {
+    "id": 34,
+    "domain": "software_architecture",
+    "problem": "Create a plugin architecture for a code editor"
+  },
+  {
+    "id": 35,
+    "domain": "software_architecture",
+    "problem": "Design a distributed consensus system for IoT devices"
+  },
+  {
+    "id": 36,
+    "domain": "ecology",
+    "problem": "Restore a degraded coral reef ecosystem"
+  },
+  {
+    "id": 37,
+    "domain": "ecology",
+    "problem": "Manage an invasive species in the Great Lakes"
+  },
+  {
+    "id": 38,
+    "domain": "ecology",
+    "problem": "Design a wildlife corridor connecting two national parks"
+  },
+  {
+    "id": 39,
+    "domain": "ecology",
+    "problem": "Create a sustainable fishing quota system for the North Sea"
+  },
+  {
+    "id": 40,
+    "domain": "ecology",
+    "problem": "Rewild a former agricultural region in Western Europe"
+  },
+  {
+    "id": 41,
+    "domain": "cooking",
+    "problem": "Design a 7-day meal plan for a family with multiple allergies"
+  },
+  {
+    "id": 42,
+    "domain": "cooking",
+    "problem": "Create a restaurant menu that minimizes food waste"
+  },
+  {
+    "id": 43,
+    "domain": "cooking",
+    "problem": "Develop a fermentation curriculum for home cooks"
+  },
+  {
+    "id": 44,
+    "domain": "cooking",
+    "problem": "Design a school lunch program that kids actually eat"
+  },
+  {
+    "id": 45,
+    "domain": "cooking",
+    "problem": "Create a recipe development process for a new cuisine fusion"
+  },
+  {
+    "id": 46,
+    "domain": "music_composition",
+    "problem": "Compose a film score for a scene transition from joy to grief"
+  },
+  {
+    "id": 47,
+    "domain": "music_composition",
+    "problem": "Write a theme that works in both orchestral and electronic arrangements"
+  },
+  {
+    "id": 48,
+    "domain": "music_composition",
+    "problem": "Design a generative music system for a meditation app"
+  },
+  {
+    "id": 49,
+    "domain": "music_composition",
+    "problem": "Create a call-and-response structure for a choir piece"
+  },
+  {
+    "id": 50,
+    "domain": "music_composition",
+    "problem": "Design a music composition system that adapts to listener biophysical signals in real time"
+  },
+  {
+    "id": 51,
+    "domain": "parenting",
+    "problem": "Help a 5-year-old develop emotional regulation skills"
+  },
+  {
+    "id": 52,
+    "domain": "parenting",
+    "problem": "Navigate screen time boundaries for a teenager"
+  },
+  {
+    "id": 53,
+    "domain": "parenting",
+    "problem": "Help a family coordinate schedules across three time zones"
+  },
+  {
+    "id": 54,
+    "domain": "parenting",
+    "problem": "Teach financial literacy to a 10-year-old"
+  },
+  {
+    "id": 55,
+    "domain": "parenting",
+    "problem": "Build a daily routine for a child with ADHD"
+  },
+  {
+    "id": 56,
+    "domain": "corporate_governance",
+    "problem": "Design a board structure for a dual-class share company"
+  },
+  {
+    "id": 57,
+    "domain": "corporate_governance",
+    "problem": "Create an anonymous feedback system for a 500-person organization"
+  },
+  {
+    "id": 58,
+    "domain": "corporate_governance",
+    "problem": "Build a supply chain transparency dashboard for a mid-size manufacturer"
+  },
+  {
+    "id": 59,
+    "domain": "corporate_governance",
+    "problem": "Design succession planning for a family-owned business"
+  },
+  {
+    "id": 60,
+    "domain": "corporate_governance",
+    "problem": "Create a compensation structure that aligns executive and stakeholder incentives"
+  },
+  {
+    "id": 61,
+    "domain": "sports_management",
+    "problem": "Rebuild a football club from relegation to top-four in five years"
+  },
+  {
+    "id": 62,
+    "domain": "sports_management",
+    "problem": "Design a youth academy development pathway"
+  },
+  {
+    "id": 63,
+    "domain": "sports_management",
+    "problem": "Create a salary cap system for competitive balance"
+  },
+  {
+    "id": 64,
+    "domain": "sports_management",
+    "problem": "Build a data analytics department for a baseball team"
+  },
+  {
+    "id": 65,
+    "domain": "sports_management",
+    "problem": "Apply Moneyball-style analytics to optimize agricultural crop yields"
+  },
+  {
+    "id": 66,
+    "domain": "journalism",
+    "problem": "Build a fact-checking pipeline for a national newsroom"
+  },
+  {
+    "id": 67,
+    "domain": "journalism",
+    "problem": "Design a local news cooperative for an underserved region"
+  },
+  {
+    "id": 68,
+    "domain": "journalism",
+    "problem": "Create editorial standards for AI-assisted reporting"
+  },
+  {
+    "id": 69,
+    "domain": "journalism",
+    "problem": "Investigate corporate influence on municipal water policy"
+  },
+  {
+    "id": 70,
+    "domain": "journalism",
+    "problem": "Design a reader trust and transparency initiative"
+  },
+  {
+    "id": 71,
+    "domain": "scientific_research",
+    "problem": "Design a replication study for a controversial psychology finding"
+  },
+  {
+    "id": 72,
+    "domain": "scientific_research",
+    "problem": "Build a collaborative research platform across five universities"
+  },
+  {
+    "id": 73,
+    "domain": "scientific_research",
+    "problem": "Create a peer review system that detects statistical manipulation"
+  },
+  {
+    "id": 74,
+    "domain": "scientific_research",
+    "problem": "Design an experiment to test a new drug delivery mechanism"
+  },
+  {
+    "id": 75,
+    "domain": "scientific_research",
+    "problem": "Apply ecological resilience principles to design fault-tolerant distributed systems"
+  },
+  {
+    "id": 76,
+    "domain": "agriculture",
+    "problem": "Convert a conventional farm to regenerative agriculture"
+  },
+  {
+    "id": 77,
+    "domain": "agriculture",
+    "problem": "Design an irrigation system for water-scarce regions"
+  },
+  {
+    "id": 78,
+    "domain": "agriculture",
+    "problem": "Create a crop rotation plan that rebuilds soil health"
+  },
+  {
+    "id": 79,
+    "domain": "agriculture",
+    "problem": "Build a supply chain from small farms to urban markets"
+  },
+  {
+    "id": 80,
+    "domain": "agriculture",
+    "problem": "Design a pest management strategy without synthetic pesticides"
+  },
+  {
+    "id": 81,
+    "domain": "transportation",
+    "problem": "Plan a high-speed rail corridor between two cities"
+  },
+  {
+    "id": 82,
+    "domain": "transportation",
+    "problem": "Design a last-mile delivery system for a dense urban area"
+  },
+  {
+    "id": 83,
+    "domain": "transportation",
+    "problem": "Create a freight logistics network for a landlocked country"
+  },
+  {
+    "id": 84,
+    "domain": "transportation",
+    "problem": "Reduce traffic fatalities in a mid-size city by 50%"
+  },
+  {
+    "id": 85,
+    "domain": "transportation",
+    "problem": "Design an electric vehicle charging infrastructure for a rural state"
+  },
+  {
+    "id": 86,
+    "domain": "diplomacy",
+    "problem": "Negotiate a resource-sharing agreement between two competing universities"
+  },
+  {
+    "id": 87,
+    "domain": "diplomacy",
+    "problem": "Design a multilateral trade agreement for six developing nations"
+  },
+  {
+    "id": 88,
+    "domain": "diplomacy",
+    "problem": "Create a framework for sharing a transboundary river"
+  },
+  {
+    "id": 89,
+    "domain": "diplomacy",
+    "problem": "Build a knowledge transfer process for a retiring expert"
+  },
+  {
+    "id": 90,
+    "domain": "diplomacy",
+    "problem": "Design a trade embargo simulation for an economics classroom"
+  },
+  {
+    "id": 91,
+    "domain": "disaster_response",
+    "problem": "Create an evacuation plan for a coastal city facing a hurricane"
+  },
+  {
+    "id": 92,
+    "domain": "disaster_response",
+    "problem": "Design a supply distribution system for earthquake relief"
+  },
+  {
+    "id": 93,
+    "domain": "disaster_response",
+    "problem": "Build a volunteer coordination platform for wildfire response"
+  },
+  {
+    "id": 94,
+    "domain": "disaster_response",
+    "problem": "Create a psychological first aid protocol for flood survivors"
+  },
+  {
+    "id": 95,
+    "domain": "disaster_response",
+    "problem": "Design a communication system that works when infrastructure fails"
+  },
+  {
+    "id": 96,
+    "domain": "architecture",
+    "problem": "Design an energy-efficient school building for a tropical climate"
+  },
+  {
+    "id": 97,
+    "domain": "architecture",
+    "problem": "Retrofit a 1960s office tower for modern mixed-use"
+  },
+  {
+    "id": 98,
+    "domain": "architecture",
+    "problem": "Create adaptable housing for aging populations"
+  },
+  {
+    "id": 99,
+    "domain": "architecture",
+    "problem": "Design a community center that serves as emergency shelter"
+  },
+  {
+    "id": 100,
+    "domain": "architecture",
+    "problem": "Design a school building using game design principles to maximize student engagement"
+  }
+]
