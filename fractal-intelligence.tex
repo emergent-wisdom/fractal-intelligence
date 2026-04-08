@@ -182,7 +182,7 @@ The four tests have classical lineage. Necessity, independence, and completeness
 
 Then recurse: each sub-concept is itself a concept. Apply the same four tests. The recursion terminates when a sub-concept is concrete enough to be addressed directly by a single Solver---the point at which the marginal-value rule (Section~\ref{sec:mvr}) indicates that further decomposition would cost more than it yields.
 
-\begin{figure}[H]
+\begin{figure}[!htb]
 \centering
 \begin{tikzpicture}[
     node distance=0.9cm,
@@ -235,7 +235,7 @@ Then recurse: each sub-concept is itself a concept. Apply the same four tests. T
 \label{fig:four-test-flow}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[!htb]
 \begin{rfbox}
 \small
 \begin{verbatim}
@@ -270,7 +270,7 @@ DECOMPOSE_CONCEPT(concept, depth_budget):
 \label{fig:decompose-algorithm}
 \end{figure}
 
-\noindent Three implementation notes are critical. First, the four tests
+Three implementation notes are critical. First, the four tests
 are evaluated by an LLM, which means they are probabilistic judgments,
 not mathematical proofs. This is appropriate: a human applying
 first-principles thinking also makes judgment calls about whether a
