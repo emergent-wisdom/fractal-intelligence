@@ -1,0 +1,39 @@
+cff-version: 1.2.0
+message: >-
+  If you use Fractal Intelligence in your research, please cite the
+  preprint below.
+title: "Fractal Intelligence: Conceptual Decomposition as Problem-Solving Infrastructure"
+abstract: >-
+  Fractal Intelligence is an architecture that recursively decomposes
+  cognitive work through a uniform five-surface contract called the
+  Solver. A Solver may be a deterministic function, a fine-tuned
+  model, a human expert, or an entire tree of sub-Solvers; the caller
+  interacts with each identically. By isolating distinct cognitive
+  modes across hard semantic boundaries, each Solver operates at its
+  productive extreme, with rejection at typed acceptance gates forcing
+  structural reframing rather than token-level compromise.
+authors:
+  - family-names: Westerberg
+    given-names: Henrik
+type: software
+url: "https://github.com/emergent-wisdom/fractal-intelligence"
+repository-code: "https://github.com/emergent-wisdom/fractal-intelligence"
+license: MIT
+keywords:
+  - problem-solving
+  - decomposition
+  - multi-agent-systems
+  - cognitive-architecture
+  - solver-contract
+preferred-citation:
+  type: article
+  title: "Fractal Intelligence: Conceptual Decomposition as Problem-Solving Infrastructure"
+  authors:
+    - family-names: Westerberg
+      given-names: Henrik
+  year: 2026
+  month: 4
+  publisher:
+    name: Zenodo
+  doi: 10.5281/zenodo.19462646
+  url: "https://doi.org/10.5281/zenodo.19462646"
