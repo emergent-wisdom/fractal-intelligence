@@ -4,14 +4,21 @@ message: >-
   preprint below.
 title: "Fractal Intelligence: Conceptual Decomposition as Problem-Solving Infrastructure"
 abstract: >-
-  Fractal Intelligence is an architecture that recursively decomposes
-  cognitive work through a uniform five-surface contract called the
-  Solver. A Solver may be a deterministic function, a fine-tuned
-  model, a human expert, or an entire tree of sub-Solvers; the caller
-  interacts with each identically. By isolating distinct cognitive
-  modes across hard semantic boundaries, each Solver operates at its
-  productive extreme, with rejection at typed acceptance gates forcing
-  structural reframing rather than token-level compromise.
+  Instead of asking how a human would solve a problem, Fractal
+  Intelligence asks what the problem is made of, decomposing it into
+  concepts rather than tasks. Each concept becomes a node behind a
+  uniform five-surface contract (the Solver), behind which any
+  reasoner can stand: a model, a human, or a further subtree, so a
+  collective presents to its parent as a single node. The boundary
+  isolates as well as composes: rejection forces a re-carve rather
+  than a retry, and concepts that recur become permanent,
+  content-addressed infrastructure, so reasoning accumulates across
+  problems rather than being rebuilt each time. The decisive test is
+  whether decomposed solving outperforms the conventional approach at
+  matched compute; the deeper question is whether independent
+  decompositions converge on the same concepts.
+version: 2.0.0
+date-released: "2026-06-12"
 authors:
   - family-names: Westerberg
     given-names: Henrik
@@ -35,5 +42,5 @@ preferred-citation:
   month: 4
   publisher:
     name: Zenodo
-  doi: 10.5281/zenodo.19462646
-  url: "https://doi.org/10.5281/zenodo.19462646"
+  doi: 10.5281/zenodo.19462645
+  url: "https://doi.org/10.5281/zenodo.19462645"
