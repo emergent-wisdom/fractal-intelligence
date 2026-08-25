@@ -44,7 +44,7 @@ The companion [Fractal Intelligence Protocol](https://github.com/emergent-wisdom
 
 Material additions are recorded by edit date. Purely editorial changes are omitted; unlisted mechanisms and claims were present in the April 7, 2026 publication.
 
-**August 25, 2026 edit (pending publication)**
+**August 25, 2026 edit**
 - *Mandatory Abstraction Before Decomposition*: a specific-to-Root genus-and-differentia ascent with parent/sibling search, exact reverse traversal, typed specialization/composition edges, and explicit parent synthesis before the four-test carve.
 - A corrected 100-problem construction artifact using GPT-5.6 Sol, replacing the unintended seeded Gemini construction as the canonical demonstration and reported as a failure-inclusive structural probe rather than an outcome benchmark.
 - *Bootstrapping from the System's Own Derivations* (§7): the archive's evaluated solution graphs — dead ends included — as a training corpus for the decomposition faculty itself, amortizing the method into weights.
