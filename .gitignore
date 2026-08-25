@@ -15,6 +15,9 @@ texput.log
 # OS
 .DS_Store
 
+# Local review and rendering scratch
+/tmp/
+
 # Python
 __pycache__/
 *.pyc

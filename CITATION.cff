@@ -1,27 +1,21 @@
 cff-version: 1.2.0
 message: >-
-  If you use Fractal Intelligence in your research, please cite the
-  preprint below.
+  If you use this work in your research, please cite the preprint below.
 title: "Fractal Intelligence: Conceptual Decomposition as Problem-Solving Infrastructure"
 abstract: >-
-  Instead of asking how a human would solve a problem, Fractal
-  Intelligence asks what the problem is made of, decomposing it into
-  concepts rather than tasks. Each concept becomes a node behind a
-  uniform five-surface contract (the Solver), behind which any
-  reasoner can stand: a model, a human, or a further subtree, so a
-  collective presents to its parent as a single node. The boundary
-  isolates as well as composes: rejection forces a re-carve rather
-  than a retry, and concepts that recur become permanent,
-  content-addressed infrastructure, so reasoning accumulates across
-  problems rather than being rebuilt each time. The decisive test is
-  whether decomposed solving outperforms the conventional approach at
-  matched compute; the deeper question is whether independent
-  decompositions converge on the same concepts.
-version: 2.0.0
+  Fractal intelligence is a form of cumulative intelligence in which bounded,
+  concept-defined units recursively decompose and reframe problems, compose
+  child work into higher-level capabilities, and preserve evaluated structures
+  for reuse or revision across problems, domains, and scales. The paper develops
+  one Solver-based realization in which a problem first ascends through adjacent
+  abstractions to a root before its specific capability is decomposed. A
+  100-problem construction probes whether the resulting topology can be
+  instantiated and structurally checked; it does not test solution quality.
 date-released: "2026-06-12"
 authors:
   - family-names: Westerberg
     given-names: Henrik
+    orcid: "https://orcid.org/0009-0002-0496-2445"
 type: software
 url: "https://github.com/emergent-wisdom/fractal-intelligence"
 repository-code: "https://github.com/emergent-wisdom/fractal-intelligence"
@@ -38,6 +32,7 @@ preferred-citation:
   authors:
     - family-names: Westerberg
       given-names: Henrik
+      orcid: "https://orcid.org/0009-0002-0496-2445"
   year: 2026
   month: 4
   publisher:
