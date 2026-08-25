@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Fractal Intelligence — mandatory-abstraction Sol run</title>
+  <style>
+    :root{color-scheme:dark;--bg:#070a12;--panel:#101625;--line:#263044;--text:#e5e7eb;--muted:#94a3b8;--teal:#5eead4;--gold:#fbbf24;--violet:#c4b5fd}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.45 system-ui,sans-serif}header{padding:14px 18px;border-bottom:1px solid var(--line);display:flex;gap:16px;align-items:center;flex-wrap:wrap}h1{font-size:19px;margin:0}.pills,.controls,.legend{display:flex;gap:7px;align-items:center;flex-wrap:wrap}.pill,button{border:1px solid #4b5870;border-radius:999px;padding:5px 9px;background:transparent;color:var(--text)}button{cursor:pointer}button:hover{border-color:var(--teal)}main{display:grid;grid-template-columns:minmax(0,1fr) 410px;height:calc(100vh - 62px)}.left{min-width:0;display:flex;flex-direction:column}.controls{padding:10px 14px;border-bottom:1px solid var(--line)}input[type=range]{width:min(520px,45vw)}.canvas{overflow:auto;flex:1;background:radial-gradient(circle at 45% 40%,#111a2d 0,#070a12 68%)}svg{display:block;min-width:100%;min-height:100%}.edge{fill:none;stroke-width:1.4;opacity:.58}.edge.composition{stroke:#60a5fa}.edge.specialization{stroke:var(--gold);stroke-dasharray:7 5;opacity:.84}.node rect{rx:8;stroke-width:1.5}.node text{fill:#fff;text-anchor:middle;font-size:10px;pointer-events:none}.node.root rect{fill:#5b21b6;stroke:var(--violet)}.node.composite rect{fill:#1e3a8a;stroke:#93c5fd}.node.solver rect{fill:#115e59;stroke:var(--teal)}.node.passive rect{fill:#4a2545;stroke:#f0abfc}.node.abstraction_parent rect{fill:#78350f;stroke:var(--gold)}.node{cursor:pointer}.right{overflow:auto;border-left:1px solid var(--line);background:var(--panel);padding:14px}.right h2{font-size:16px;margin:16px 0 6px}.right h2:first-child{margin-top:0}.muted{color:var(--muted)}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#090d17;border:1px solid var(--line);padding:9px;border-radius:7px}ol{padding-left:22px}.invocation,.ascent-step{padding:8px 0;border-bottom:1px solid var(--line)}.pathchain{color:#fde68a;background:#090d17;border:1px solid var(--line);padding:9px;border-radius:7px;overflow-wrap:anywhere}code{color:#bae6fd}.legend{padding:8px 14px;border-top:1px solid var(--line);color:var(--muted);font-size:12px}.swatch{width:11px;height:11px;border-radius:3px}.swatch.composite{background:#1e3a8a}.swatch.solver{background:#115e59}.swatch.passive{background:#4a2545}.swatch.abstraction_parent{background:#78350f}.error{color:#fca5a5}@media(max-width:900px){main{grid-template-columns:1fr;height:auto}.canvas{height:62vh}.right{border-left:0;border-top:1px solid var(--line)}input[type=range]{width:55vw}}
+  </style>
+</head>
+<body>
+  <header><h1>Fractal Intelligence — mandatory-abstraction Sol construction</h1><div id="meta" class="pills"></div></header>
+  <main>
+    <section class="left">
+      <div class="controls">
+        <button id="play" type="button">Play observed growth</button>
+        <input id="step" type="range" min="0" value="0">
+        <strong id="stepLabel">time 0</strong>
+        <label><input id="follow" type="checkbox" checked> follow live run</label>
+      </div>
+      <div class="canvas"><svg id="graph" role="img" aria-label="Observed Solver graph"></svg></div>
+      <div class="legend"><span class="swatch composite"></span> composite <span class="swatch solver"></span> solver <span class="swatch passive"></span> passive/router <span class="swatch abstraction_parent"></span> abstraction parent <span>solid: composition</span><span>gold dashed: specialization</span></div>
+    </section>
+    <aside id="detail" class="right"><p class="muted">Loading run…</p></aside>
+  </main>
+  <script>
+  const params=new URLSearchParams(location.search);
+  const source=params.get('state')||'runs/sol-mandatory-abstraction-100-2026-08-25/state.json';
+  const esc=value=>String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+  let state=null,current=0,timer=null,lastCaseCount=-1;
+  const nodeMap=()=>new Map(state.graph.nodes.map(node=>[node.id,node]));
+
+  function labelLines(value){
+    const text=String(value).replace(/Solver$/,'').trim();
+    if(text.length<=23)return[text,''];
+    let cut=text.lastIndexOf(' ',23);if(cut<8)cut=23;
+    return[text.slice(0,cut),text.slice(cut).trim().slice(0,25)];
+  }
+
+  async function load(){
+    const response=await fetch(`${source}?t=${Date.now()}`);
+    if(!response.ok)throw Error(`${source}: HTTP ${response.status}`);
+    const next=await response.json(),wasLatest=state&&current===state.cases.length+1;
+    state=next;document.querySelector('#step').max=state.cases.length+1;
+    if(document.querySelector('#follow').checked&&(wasLatest||lastCaseCount<0))current=state.cases.length+1;
+    lastCaseCount=state.cases.length;render();
+  }
+
+  function problemSeen(problemId){
+    if(problemId===null||problemId===undefined)return current>=1;
+    const index=state.cases.findIndex(item=>item.problem_id===problemId);
+    return index>=0&&current>=index+2;
+  }
+
+  function visible(){
+    const rootId=state.root_node_id;
+    const nodes=state.graph.nodes.filter(node=>current===0?node.id===rootId:node.id===rootId||problemSeen(node.created_problem));
+    const ids=new Set(nodes.map(node=>node.id));
+    const composition=state.graph.composition_edges.filter(edge=>ids.has(edge.parent)&&ids.has(edge.child)&&problemSeen(edge.first_problem));
+    const specialization=state.graph.specialization_edges.filter(edge=>ids.has(edge.parent)&&ids.has(edge.member)&&problemSeen(edge.first_problem));
+    return{nodes,composition,specialization};
+  }
+
+  function positions(data){
+    const ids=data.nodes.map(node=>node.id),indegree=new Map(ids.map(id=>[id,0])),outgoing=new Map(ids.map(id=>[id,[]]));
+    const edges=[...data.composition.map(edge=>({source:edge.parent,target:edge.child})),...data.specialization.map(edge=>({source:edge.parent,target:edge.member}))];
+    edges.forEach(edge=>{if(outgoing.has(edge.source)&&indegree.has(edge.target)){outgoing.get(edge.source).push(edge.target);indegree.set(edge.target,indegree.get(edge.target)+1)}});
+    const queue=ids.filter(id=>indegree.get(id)===0).sort(),depth=new Map([[state.root_node_id,0]]);
+    while(queue.length){const id=queue.shift();for(const child of outgoing.get(id)||[]){depth.set(child,Math.max(depth.get(child)||0,(depth.get(id)||0)+1));indegree.set(child,indegree.get(child)-1);if(indegree.get(child)===0)queue.push(child)}}
+    ids.forEach(id=>{if(!depth.has(id))depth.set(id,id===state.root_node_id?0:1)});
+    const levels=new Map(),names=nodeMap();ids.forEach(id=>{const d=depth.get(id),items=levels.get(d)||[];items.push(id);levels.set(d,items)});levels.forEach(items=>items.sort((a,b)=>names.get(a).name.localeCompare(names.get(b).name)));
+    const maxItems=Math.max(1,...[...levels.values()].map(items=>items.length)),maxDepth=Math.max(0,...levels.keys()),width=Math.max(1100,(maxDepth+1)*235+120),height=Math.max(700,maxItems*58+100),pos=new Map();
+    levels.forEach((items,d)=>items.forEach((id,index)=>pos.set(id,{x:105+d*225,y:50+(index+1)*(height-100)/(items.length+1)})));
+    return{pos,width,height};
+  }
+
+  function renderGraph(data){
+    const svg=document.querySelector('#graph'),layout=positions(data);svg.setAttribute('viewBox',`0 0 ${layout.width} ${layout.height}`);
+    const edges=[...data.composition.map(edge=>({parent:edge.parent,child:edge.child,type:'composition',label:edge.role})),...data.specialization.map(edge=>({parent:edge.parent,child:edge.member,type:'specialization',label:edge.dispatch_basis}))];
+    const paths=edges.map(edge=>{const a=layout.pos.get(edge.parent),b=layout.pos.get(edge.child);if(!a||!b)return'';const mid=(a.x+b.x)/2;return`<path class="edge ${edge.type}" d="M ${a.x+80} ${a.y} C ${mid} ${a.y},${mid} ${b.y},${b.x-80} ${b.y}"><title>${esc(edge.label)}</title></path>`}).join('');
+    const nodes=data.nodes.map(node=>{const p=layout.pos.get(node.id),lines=labelLines(node.name),kind=node.id===state.root_node_id?'root':node.kind;return`<g class="node ${esc(kind)}" data-id="${esc(node.id)}" transform="translate(${p.x-80} ${p.y-20})"><rect width="160" height="40"></rect><title>${esc(node.id+' — '+node.name+'\n'+node.capability)}</title><text x="80" y="16">${esc(lines[0])}</text><text x="80" y="30">${esc(lines[1])}</text></g>`}).join('');
+    svg.innerHTML=paths+nodes;svg.querySelectorAll('.node').forEach(group=>group.onclick=()=>showNode(group.dataset.id));
+  }
+
+  function relationshipList(nodeId,data){
+    const nodes=nodeMap(),items=[];
+    data.composition.forEach(edge=>{if(edge.child===nodeId)items.push(`part of ${nodes.get(edge.parent).name}: ${edge.role}`);if(edge.parent===nodeId)items.push(`composes with ${nodes.get(edge.child).name}: ${edge.role}`)});
+    data.specialization.forEach(edge=>{if(edge.member===nodeId)items.push(`specializes ${nodes.get(edge.parent).name}: ${edge.dispatch_basis}`);if(edge.parent===nodeId)items.push(`has specialization ${nodes.get(edge.member).name}: ${edge.dispatch_basis}`)});
+    return items;
+  }
+
+  function nodeAtCurrent(node){
+    const snapshot={...node};
+    for(const revision of [...(node.revisions||[])].reverse()){
+      if(!problemSeen(revision.problem_id))Object.assign(snapshot,revision.before);
+    }
+    return snapshot;
+  }
+
+  function showNode(id){
+    const stored=state.graph.nodes.find(item=>item.id===id);if(!stored)return;
+    const node=nodeAtCurrent(stored),data=visible(),relations=relationshipList(id,data),parents=relations.filter(item=>item.startsWith('part of')||item.startsWith('specializes')).length,invocationCount=(node.invocations||[]).filter(item=>problemSeen(item.problem_id)).length;
+    const origin=node.id===state.root_node_id?'fixed universal root':node.created_problem===null?'blind bootstrap':`problem ${node.created_problem}`;
+    document.querySelector('#detail').innerHTML=`<h2>${esc(node.name)}</h2><p><code>${esc(node.id)}</code> · ${esc(node.kind)}</p><p>${esc(node.capability)}</p><h2>Contract</h2><p><strong>Accepts:</strong> ${esc(node.accepts)}</p><p><strong>Produces:</strong> ${esc(node.produces)}</p><p><strong>Boundary:</strong> ${esc(node.boundary)}</p><p><strong>Excludes:</strong> ${esc(node.excludes)}</p><p class="muted">Created at ${esc(origin)}; invoked ${invocationCount} time(s) so far; ${parents} parent relation(s) so far.</p>${relations.length?`<h2>Relationships</h2><ul>${relations.map(item=>`<li>${esc(item)}</li>`).join('')}</ul>`:''}`;
+  }
+
+  function renderDetail(){
+    const host=document.querySelector('#detail'),nodes=nodeMap();
+    if(current===0){const root=nodes.get(state.root_node_id);host.innerHTML=`<h2>Time 0 · ${esc(root.name)}</h2><p>${esc(root.capability)}</p><p class="muted">The universal persistent root exists. No derived nodes exist yet.</p>`;return}
+    if(current===1){host.innerHTML=`<h2>Blind bootstrap</h2><p>${esc(state.bootstrap.summary||'Sol-derived provisional topology.')}</p><p class="muted">Sol saw the fixed RootSolver contract but no problem text. The displayed children are its provisional decomposition of Problem Solving.</p>`;return}
+    const c=state.cases[current-2],invocations=new Map(c.invocations.map(item=>[item.id,item])),ascentNames=c.abstraction_ascent.map(step=>nodes.get(step.node_id).name);
+    const ascent=c.abstraction_ascent.map((step,index)=>`<div class="ascent-step"><strong>${esc(nodes.get(step.node_id).name)}</strong>${index<c.abstraction_ascent.length-1?` → ${esc(nodes.get(c.abstraction_ascent[index+1].node_id).name)}`:''}<br><span class="muted">${esc(step.why_more_general)}</span><br>${esc(step.reframing_effect)}</div>`).join('');
+    const constituents=c.specific_constituent_invocations.map(id=>invocations.get(id)).filter(Boolean),constituentRows=constituents.map(item=>`<li><strong>${esc(nodes.get(item.node_id).name)}</strong> — ${esc(item.contribution)}</li>`).join('');
+    const rows=c.invocations.map(item=>`<div class="invocation"><code>${esc(item.node_id)}</code> · ${esc(item.catalog_action)} · ${esc(item.edge_kind)}<br><strong>${esc(nodes.get(item.node_id).name)}:</strong> ${esc(item.contribution)}</div>`).join('');
+    host.innerHTML=`<h2>Problem ${c.problem_id}</h2><p class="muted">${esc(c.domain)}</p><p><strong>${esc(c.problem)}</strong></p><h2>Upward first</h2><p class="pathchain">${ascentNames.map(esc).join(' → ')}</p>${ascent}<h2>First-principles framing</h2><p>${esc(c.framing)}</p><h2>What the specific capability is made of</h2><ul>${constituentRows}</ul><h2>Emergent parent capability</h2><p>${esc(c.synthesis)}</p><h2>Proposed solution</h2><p>${esc(c.proposed_solution)}</p><details><summary>All ${c.invocations.length} invocations</summary>${rows}</details>`;
+  }
+
+  function render(){
+    if(!state)return;current=Math.max(0,Math.min(current,state.cases.length+1));document.querySelector('#step').value=current;
+    const data=visible(),label=current===0?'time 0 · persistent RootSolver':current===1?'blind bootstrap':`problem ${state.cases[current-2].problem_id} · ${state.cases[current-2].domain}`;document.querySelector('#stepLabel').textContent=label;
+    const m=state.metrics||{},timing=state.status==='complete'&&m.model_call_seconds_so_far?`${(m.model_call_seconds_so_far/60).toFixed(1)} min model-call time`:m.projected_total_seconds?`${(m.projected_total_seconds/60).toFixed(1)} min projected`:'projection pending',edgeCount=data.composition.length+data.specialization.length;
+    document.querySelector('#meta').innerHTML=[state.status,`${state.cases.length}/${state.problems.length} problems`,`${data.nodes.length}/${state.graph.nodes.length} visible nodes`,`${edgeCount} visible edges`,`${state.batches.length} batch calls`,timing].map(value=>`<span class="pill">${esc(value)}</span>`).join('');renderGraph(data);renderDetail();
+  }
+
+  document.querySelector('#step').oninput=event=>{current=Number(event.target.value);document.querySelector('#follow').checked=current===state.cases.length+1;render()};
+  document.querySelector('#play').onclick=()=>{if(timer){clearInterval(timer);timer=null;document.querySelector('#play').textContent='Play observed growth';return}current=0;render();document.querySelector('#play').textContent='Stop';timer=setInterval(()=>{if(current>=state.cases.length+1){clearInterval(timer);timer=null;document.querySelector('#play').textContent='Play observed growth';return}current++;render()},650)};
+  load().catch(error=>document.querySelector('#detail').innerHTML=`<p class="error">${esc(error.message)}</p>`);setInterval(()=>load().catch(()=>{}),5000);
+  </script>
+</body>
+</html>

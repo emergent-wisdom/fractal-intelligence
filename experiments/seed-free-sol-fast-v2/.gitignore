@@ -1,0 +1,4 @@
+__pycache__/
+runs/*
+!runs/sol-mandatory-abstraction-100-2026-08-25/
+!runs/sol-mandatory-abstraction-100-2026-08-25/**

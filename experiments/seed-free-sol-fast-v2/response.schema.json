@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["response_type", "batch_number", "bootstrap", "cases", "summary"],
+  "properties": {
+    "response_type": {"type": "string", "enum": ["bootstrap", "batch"]},
+    "batch_number": {"type": "integer"},
+    "bootstrap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["nodes", "edges", "rationale"],
+      "properties": {
+        "nodes": {"type": "array", "items": {"$ref": "#/$defs/node"}},
+        "edges": {"type": "array", "items": {"$ref": "#/$defs/edge"}},
+        "rationale": {"type": "string"}
+      }
+    },
+    "cases": {"type": "array", "items": {"$ref": "#/$defs/case"}},
+    "summary": {"type": "string"}
+  },
+  "$defs": {
+    "node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["temp_id", "name", "kind", "capability", "accepts", "produces", "boundary", "excludes"],
+      "properties": {
+        "temp_id": {"type": "string"},
+        "name": {"type": "string"},
+        "kind": {"type": "string", "enum": ["passive", "solver", "composite", "abstraction_parent"]},
+        "capability": {"type": "string"},
+        "accepts": {"type": "string"},
+        "produces": {"type": "string"},
+        "boundary": {"type": "string"},
+        "excludes": {"type": "string"}
+      }
+    },
+    "edge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "parent_ref", "child_ref", "role", "rationale"],
+      "properties": {
+        "kind": {"type": "string", "enum": ["composition", "specialization"]},
+        "parent_ref": {"type": "string"},
+        "child_ref": {"type": "string"},
+        "role": {"type": "string"},
+        "rationale": {"type": "string"}
+      }
+    },
+    "ascent_step": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["node_ref", "why_more_general", "reframing_effect"],
+      "properties": {
+        "node_ref": {"type": "string"},
+        "why_more_general": {"type": "string"},
+        "reframing_effect": {"type": "string"}
+      }
+    },
+    "invocation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "parent_id", "node_ref", "edge_kind", "role", "contribution"],
+      "properties": {
+        "id": {"type": "string"},
+        "parent_id": {"type": "string"},
+        "node_ref": {"type": "string"},
+        "edge_kind": {"type": "string", "enum": ["root", "composition", "specialization"]},
+        "role": {"type": "string"},
+        "contribution": {"type": "string"}
+      }
+    },
+    "revision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["node_ref", "capability", "accepts", "produces", "boundary", "excludes", "rationale"],
+      "properties": {
+        "node_ref": {"type": "string"},
+        "capability": {"type": "string"},
+        "accepts": {"type": "string"},
+        "produces": {"type": "string"},
+        "boundary": {"type": "string"},
+        "excludes": {"type": "string"},
+        "rationale": {"type": "string"}
+      }
+    },
+    "case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["problem_id", "framing", "new_nodes", "topology_edges", "abstraction_ascent", "invocations", "revisions", "synthesis", "proposed_solution"],
+      "properties": {
+        "problem_id": {"type": "integer"},
+        "framing": {"type": "string"},
+        "new_nodes": {"type": "array", "items": {"$ref": "#/$defs/node"}},
+        "topology_edges": {"type": "array", "items": {"$ref": "#/$defs/edge"}},
+        "abstraction_ascent": {"type": "array", "minItems": 2, "items": {"$ref": "#/$defs/ascent_step"}},
+        "invocations": {"type": "array", "minItems": 2, "items": {"$ref": "#/$defs/invocation"}},
+        "revisions": {"type": "array", "items": {"$ref": "#/$defs/revision"}},
+        "synthesis": {"type": "string"},
+        "proposed_solution": {"type": "string"}
+      }
+    }
+  }
+}
