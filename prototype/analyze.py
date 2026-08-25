@@ -44,10 +44,23 @@ for n in tree["nodes"]:
     all_domains.update(n["feedback"]["domains_served"])
 print(f"\nDomains covered: {len(all_domains)}")
 
-# Top highways
-print(f"\n=== TOP 20 REASONING HIGHWAYS ===")
-for h in stats["top_highways"][:20]:
-    print(f"  {h['concept']:40s} {h['times_invoked']:3d}x across {h['domains']:2d} domains")
+# Canonical path-ledger highways. Final node counters contain resumption history
+# that is absent from the 100 saved paths, so they are not interchangeable.
+path_appearances = Counter()
+path_domains = {}
+for path in tree["routing_paths"]:
+    for event in path["path"]:
+        concept = event["concept"]
+        path_appearances[concept] += 1
+        path_domains.setdefault(concept, set()).add(path["domain"])
+
+highways = sorted(
+    path_appearances,
+    key=lambda c: (-len(path_domains[c]), -path_appearances[c], c),
+)
+print(f"\n=== TOP 20 REASONING HIGHWAYS (CANONICAL SAVED PATHS) ===")
+for concept in highways[:20]:
+    print(f"  {concept:40s} {path_appearances[concept]:3d}x across {len(path_domains[concept]):2d} domains")
 
 # Multi-domain nodes
 multi = [n for n in tree["nodes"] if len(n["feedback"]["domains_served"]) >= 5]
@@ -64,13 +77,14 @@ print(f"Tight budget problems (≤5): {len(tight)}")
 
 # Cross-domain examples
 print(f"\n=== CROSS-DOMAIN REUSE EXAMPLES ===")
-for n in sorted(tree["nodes"], key=lambda x: -len(x["feedback"]["domains_served"]))[:5]:
-    doms = n["feedback"]["domains_served"]
-    print(f"  {n['concept']} ({len(doms)} domains, {n['feedback']['times_invoked']}x):")
-    for pid in n["feedback"]["problems_routed"][:3]:
-        rp = next((r for r in tree["routing_paths"] if r["problem_id"] == pid), None)
-        if rp:
-            print(f"    #{pid} ({rp['domain']}): {rp['problem_text'][:55]}")
+for concept in highways[:5]:
+    print(f"  {concept} ({len(path_domains[concept])} domains, {path_appearances[concept]}x):")
+    examples = [
+        path for path in tree["routing_paths"]
+        if any(event["concept"] == concept for event in path["path"])
+    ]
+    for path in examples[:3]:
+        print(f"    #{path['problem_id']} ({path['domain']}): {path['problem_text'][:55]}")
     print()
 
 # Reuse curve for paper

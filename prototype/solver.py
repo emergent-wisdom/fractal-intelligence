@@ -22,14 +22,32 @@ import os
 from graph import SolverGraph
 from google import genai
 
-# Load API key
-env_path = os.path.expanduser("~/Documents/Code/final/temporal-hindsight-learning/experiment/.env")
-with open(env_path) as f:
-    for line in f:
-        if line.startswith("GEMINI_API_KEY="):
-            os.environ["GEMINI_API_KEY"] = line.strip().split("=", 1)[1]
 
-client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
+def load_gemini_api_key() -> str:
+    """Read GEMINI_API_KEY from the environment or an ignored local .env file."""
+    api_key = os.environ.get("GEMINI_API_KEY", "").strip()
+    if api_key:
+        return api_key
+
+    env_path = os.path.join(os.path.dirname(__file__), ".env")
+    if os.path.isfile(env_path):
+        with open(env_path, encoding="utf-8") as env_file:
+            for raw_line in env_file:
+                line = raw_line.strip()
+                if not line or line.startswith("#") or "=" not in line:
+                    continue
+                name, value = line.split("=", 1)
+                if name.strip() == "GEMINI_API_KEY":
+                    api_key = value.strip().strip("\"'")
+                    if api_key:
+                        return api_key
+
+    raise RuntimeError(
+        "Set GEMINI_API_KEY in the environment or in prototype/.env before regenerating the run."
+    )
+
+
+client = genai.Client(api_key=load_gemini_api_key())
 MODEL = "gemini-3-flash-preview"
 THETA = 0.25
 MAX_DEPTH = 4
@@ -369,7 +387,9 @@ def execute_plan(items: list, parent_id: str | None, graph: SolverGraph,
             # For new nodes, we need the ID after batch executes
             # For reused nodes, we have it now
             final_id = node_id  # may be None for new nodes (resolved after batch)
-            node_log.append((final_id, reused, concept, item, d, len(ops) - 1 if not node_id else -1))
+            # Keep the create operation's index, not the following connect index,
+            # so the saved trace can recover the new node's actual ID.
+            node_log.append((final_id, reused, concept, item, d, create_idx if not node_id else -1))
             used += 1
 
             # Recurse into children
@@ -493,7 +513,7 @@ def process_problem(problem: dict, graph: SolverGraph, routing_paths: list):
     new_ids = list(nodes_after - nodes_before)
 
     # Restructuring (with seed protection)
-    SEED_IDS = {f"solver_{i:04d}" for i in range(1, 7)}  # solver_0001 through solver_0007
+    SEED_IDS = {f"solver_{i:04d}" for i in range(1, 7)}  # solver_0001 through solver_0006
 
     for r in plan.get("restructure", []):
         if not isinstance(r, dict):
@@ -664,7 +684,8 @@ def seed_universal_tree(graph: SolverGraph):
     seed_ids = []
     for concept, description, bounds, not_in_scope in UNIVERSAL_SEEDS:
         node_id = graph.create_node(concept, description, bounds=bounds,
-                                     not_in_scope=not_in_scope, depth=1)
+                                     not_in_scope=not_in_scope, depth=1,
+                                     origin="initial_seed")
         seed_ids.append((node_id, concept, description))
         print(f"    ✦ {concept} [{node_id}]")
 
@@ -724,12 +745,13 @@ Return ONLY valid JSON:
         nis = sc.get("not_in_scope", "")
         if name:
             child_id = graph.create_node(name, desc, bounds=bounds,
-                                          not_in_scope=nis, depth=2)
+                                          not_in_scope=nis, depth=2,
+                                          origin="initial_seed")
             graph.add_edge(seed_id, child_id, 0)
             print(f"      ├── {name} [{child_id}]")
 
 
-def maintenance_pass(graph: SolverGraph, routing_paths: list):
+def maintenance_pass(graph: SolverGraph, routing_paths: list, checkpoint: int):
     """MetaObserverSolver: diagnose the tree and propose restructuring."""
     diag = graph.diagnose_tree()
     if not diag["issues"]:
@@ -769,7 +791,7 @@ Return JSON:
     }}
   ]
 }}""",
-        system="You are the MetaObserverSolver. Only act when the evidence is clear. Skip when uncertain. NEVER touch solver_0001 through solver_0007 — these are universal seeds that must remain at depth 1.",
+        system="You are the MetaObserverSolver. Only act when the evidence is clear. Skip when uncertain. NEVER touch solver_0001 through solver_0006 — these are universal seeds that must remain at depth 1.",
         max_tokens=4096
     )
 
@@ -801,7 +823,10 @@ Return JSON:
             desc = action.get("description", "")
             children = action.get("children_ids", [])
             if name and children:
-                pid = graph.add_parent(name, desc, children)
+                pid = graph.add_parent(
+                    name, desc, children, origin="maintenance",
+                    created_after_problem=checkpoint
+                )
                 if pid:
                     print(f"    ↑ Added parent {name} over {children}. {why}")
 
@@ -810,7 +835,10 @@ Return JSON:
             split_into = action.get("split_into", [])
             if split_id and split_into:
                 node = graph.get_node(split_id)
-                new_ids = graph.split_node(split_id, split_into)
+                new_ids = graph.split_node(
+                    split_id, split_into, origin="maintenance",
+                    created_after_problem=checkpoint
+                )
                 if new_ids:
                     print(f"    ✂ Split {node['concept'] if node else split_id} → {[s['concept'] for s in split_into]}. {why}")
 
@@ -868,7 +896,7 @@ def main():
             print(f"\n{'~'*70}")
             print(f"MAINTENANCE PASS (after {len(routing_paths)} problems)")
             print(f"{'~'*70}")
-            maintenance_pass(graph, routing_paths)
+            maintenance_pass(graph, routing_paths, len(routing_paths))
 
         # Save after each problem
         with open(routing_path_file, "w") as f:

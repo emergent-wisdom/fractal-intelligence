@@ -110,7 +110,8 @@ class SolverGraph:
     def create_node(self, concept: str, description: str, bounds: str = "",
                     not_in_scope: str = "", depth: int = 1,
                     quality_gain: float = 0.5, problem_id: int = 0,
-                    domain: str = "", dedup_threshold: float = 0.60) -> str:
+                    domain: str = "", dedup_threshold: float = 0.60,
+                    origin: str = "", created_after_problem: int = 0) -> str:
         """Create a solver node with auto-embedding. Returns node ID.
 
         If a semantically similar node already exists (cosine > dedup_threshold),
@@ -142,14 +143,20 @@ class SolverGraph:
 
         domains = json.dumps([domain] if domain else [])
         problems = json.dumps([problem_id] if problem_id else [])
+        if not origin:
+            origin = "problem" if problem_id else "unspecified"
+        metadata = json.dumps({
+            "origin": origin,
+            "created_after_problem": created_after_problem,
+        })
 
         self.conn.execute(
             """INSERT INTO nodes (id, concept, description, bounds, not_in_scope,
                depth, times_invoked, domains_served, problems_routed,
-               quality_gain, created_by_problem, embedding)
-               VALUES (?, ?, ?, ?, ?, ?, 1, ?, ?, ?, ?, ?)""",
+               quality_gain, created_by_problem, embedding, metadata)
+               VALUES (?, ?, ?, ?, ?, ?, 1, ?, ?, ?, ?, ?, ?)""",
             (node_id, concept, description, bounds, not_in_scope,
-             depth, domains, problems, quality_gain, problem_id, embedding)
+             depth, domains, problems, quality_gain, problem_id, embedding, metadata)
         )
         self._commit()
         return node_id
@@ -306,7 +313,8 @@ class SolverGraph:
 
     def add_parent(self, new_concept: str, new_description: str,
                    children_ids: list[str], problem_id: int = 0,
-                   domain: str = "", bounds: str = "", not_in_scope: str = "") -> str:
+                   domain: str = "", bounds: str = "", not_in_scope: str = "",
+                   origin: str = "", created_after_problem: int = 0) -> str:
         """Create a new parent node and re-parent existing children under it.
 
         - Creates the new parent at min(children depths) - 1
@@ -330,7 +338,8 @@ class SolverGraph:
         parent_id = self.create_node(
             new_concept, new_description, depth=parent_depth,
             problem_id=problem_id, domain=domain,
-            bounds=bounds, not_in_scope=not_in_scope
+            bounds=bounds, not_in_scope=not_in_scope, origin=origin,
+            created_after_problem=created_after_problem
         )
 
         # Remove children's edges from root-level sources
@@ -409,7 +418,8 @@ class SolverGraph:
         return True
 
     def split_node(self, node_id: str, new_concepts: list[dict],
-                   problem_id: int = 0, domain: str = "") -> list[str]:
+                   problem_id: int = 0, domain: str = "", origin: str = "",
+                   created_after_problem: int = 0) -> list[str]:
         """Split a solver into multiple more specific solvers.
 
         Each entry in new_concepts: {"concept": "Name", "description": "..."}
@@ -425,7 +435,8 @@ class SolverGraph:
             nid = self.create_node(
                 nc.get("concept", nc.get("solver", "UnknownSolver")), nc.get("description", ""),
                 depth=original["depth"] + 1,
-                problem_id=problem_id, domain=domain
+                problem_id=problem_id, domain=domain, origin=origin,
+                created_after_problem=created_after_problem
             )
             self.add_edge(node_id, nid, problem_id)
             new_ids.append(nid)
@@ -625,7 +636,9 @@ class SolverGraph:
                     elif action == "split":
                         new_ids = self.split_node(params["node_id"], params["into"],
                                                   params.get("problem_id", 0),
-                                                  params.get("domain", ""))
+                                                  params.get("domain", ""),
+                                                  params.get("origin", ""),
+                                                  params.get("created_after_problem", 0))
                         results.append({"ids": new_ids, "action": "split"})
 
                     elif action == "add_parent":
@@ -634,7 +647,9 @@ class SolverGraph:
                                               params.get("problem_id", 0),
                                               params.get("domain", ""),
                                               params.get("bounds", ""),
-                                              params.get("not_in_scope", ""))
+                                              params.get("not_in_scope", ""),
+                                              params.get("origin", ""),
+                                              params.get("created_after_problem", 0))
                         results.append({"id": pid, "action": "add_parent"})
 
                     elif action == "delete_edge":
@@ -1028,6 +1043,8 @@ class SolverGraph:
                 "children": [c["id"] for c in self.get_children(n["id"])],
                 "created_by_problem": n["created_by_problem"],
                 "created_at_step": n["created_by_problem"],
+                "origin": n["metadata"].get("origin", "legacy"),
+                "created_after_problem": n["metadata"].get("created_after_problem", 0),
             })
 
         vis_edges = [

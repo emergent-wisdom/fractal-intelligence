@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fractal Intelligence — Reasoning Highway Visualizer</title>
+<title>Fractal Intelligence — Planning Prototype</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/3d-force-graph"></script>
+<script src="https://unpkg.com/3d-force-graph@1.80.0/dist/3d-force-graph.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
   :root {
@@ -77,7 +77,7 @@
     min-width: 70px; font-variant-numeric: tabular-nums;
   }
   #play-btn {
-    background: var(--accent); color: #fff; border: none;
+    background: var(--accent); color: #062d29; border: none;
     padding: 5px 14px; border-radius: 6px; cursor: pointer;
     font-size: 11px; font-weight: 600; font-family: inherit;
     transition: transform 0.1s, box-shadow 0.2s;
@@ -99,6 +99,21 @@
       radial-gradient(circle 1px at center, rgba(255,255,255,0.03) 1px, transparent 1px);
     background-size: 100% 100%, 24px 24px;
   }
+
+  #graph-legend {
+    position: fixed; left: 16px; bottom: 202px; z-index: 95;
+    display: flex; align-items: center; flex-wrap: wrap; gap: 8px;
+    padding: 7px 10px; border: 1px solid var(--border); border-radius: 8px;
+    background: rgba(12,12,18,0.82); backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur); pointer-events: none;
+    font-size: 9px; color: var(--text-2);
+  }
+  .legend-title {
+    color: var(--text-1); font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.5px; margin-right: 2px;
+  }
+  .legend-item { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
+  .legend-dot { width: 7px; height: 7px; border-radius: 50%; box-shadow: 0 0 5px currentColor; }
 
   /* ═══ Side panel ═══ */
   #side-panel {
@@ -157,6 +172,8 @@
 
   .problem-list { max-height: 55vh; overflow-y: auto; }
   .problem-item {
+    display: block; width: 100%; color: inherit; text-align: left;
+    font-family: inherit;
     padding: 8px 10px; margin-bottom: 4px;
     background: rgba(255,255,255,0.02); border-radius: 8px;
     cursor: pointer; font-size: 11px; line-height: 1.4;
@@ -168,6 +185,9 @@
     background: rgba(129,140,248,0.04);
     transform: translateX(3px);
   }
+  .problem-item:focus-visible, .back-btn:focus-visible, #play-btn:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px;
+  }
   .problem-item .pid {
     font-family: 'JetBrains Mono', monospace;
     color: var(--accent); font-weight: 500; font-size: 10px;
@@ -175,6 +195,13 @@
   .problem-item .pdom {
     color: var(--text-2); font-size: 9px; text-transform: uppercase;
     letter-spacing: 0.5px;
+  }
+
+  .scope-note {
+    font-size: 10px; line-height: 1.5; color: var(--text-2);
+    margin-bottom: 14px; padding: 9px 10px;
+    background: rgba(255,255,255,0.025); border: 1px solid var(--border);
+    border-radius: 8px;
   }
 
   /* ═══ Bottom panel ═══ */
@@ -252,6 +279,42 @@
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 10px; }
   * { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.08) transparent; }
+
+  @media (max-width: 1350px) {
+    #header { padding: 0 14px; gap: 10px; }
+    #header h1 { font-size: 13px; }
+    .controls { gap: 8px; }
+    .cg { gap: 4px; }
+    .cg label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+    .cg input[type="range"] { width: 100px; }
+    .cg input[type="text"] { width: 110px; }
+    .stats-bar { gap: 8px; }
+  }
+
+  @media (max-width: 1250px) {
+    .stats-bar { display: none; }
+  }
+
+  @media (max-width: 1100px) {
+    #header h1 { display: none; }
+    .controls { justify-content: flex-start; }
+  }
+
+  @media (max-width: 768px) {
+    #bottom-panel { display: none; }
+    #graph { right: 0; bottom: 44vh; }
+    #side-panel {
+      display: block; top: 56vh; left: 0; right: 0; bottom: 0;
+      width: auto; border-left: 0; border-top: 1px solid var(--border);
+      padding: 14px;
+    }
+    .controls, .stats-bar { display: none; }
+    #header h1 { display: block; font-size: 13px; }
+    #graph-legend {
+      left: 8px; right: 8px; bottom: calc(44vh + 8px);
+      justify-content: center; gap: 6px; padding: 5px 7px;
+    }
+  }
 </style>
 </head>
 <body>
@@ -268,63 +331,74 @@
 </div>
 
 <div id="header">
-  <h1><span>Fractal Intelligence</span> &mdash; Reasoning Highways</h1>
+  <h1><span>Fractal Intelligence</span> &mdash; Shared Concept Graph</h1>
   <div class="controls">
     <div class="cg">
-      <label>Problem</label>
-      <input type="range" id="step-slider" min="1" max="100" value="100">
-      <span id="step-display">&mdash;</span>
-      <button id="play-btn">Play</button>
+      <label for="step-slider">Observed growth</label>
+      <input type="range" id="step-slider" min="0" max="100" value="100">
+      <span id="step-display" aria-live="polite">&mdash;</span>
+      <button id="play-btn">Replay growth</button>
     </div>
     <div class="cg">
-      <label>Color</label>
+      <label for="color-mode">Color</label>
       <select id="color-mode">
         <option value="domains">Domain count</option>
-        <option value="invocations">Invocations</option>
-        <option value="domain">Source domain</option>
+        <option value="invocations">Path appearances</option>
+        <option value="domain">First path domain</option>
       </select>
     </div>
     <div class="cg">
-      <label>Problems</label>
+      <label for="show-problems">Problems</label>
       <select id="show-problems">
         <option value="show">Show</option>
         <option value="hide">Hide</option>
       </select>
     </div>
     <div class="cg">
-      <label>Search</label>
-      <input type="text" id="search-input" placeholder="Find concept...">
+      <label for="search-input">Search</label>
+      <input type="text" id="search-input" placeholder="Find concept..." aria-controls="panel-node">
     </div>
   </div>
   <div class="stats-bar">
-    <div>Nodes <span class="v" id="s-nodes">0</span></div>
-    <div>Reuse <span class="v" id="s-reuse">0%</span></div>
-    <div>Highways <span class="v" id="s-highways">0</span></div>
+    <div title="Final surviving Solver nodes observed by this reconstruction step">Observed nodes <span class="v" id="s-nodes">0 / 456</span></div>
+    <div title="Actions marked reused in the canonical saved-path ledger">Structural reuse <span class="v" id="s-reuse">0%</span></div>
+    <div title="Concepts appearing in at least three saved-path domains">Cross-domain candidates <span class="v" id="s-highways">0</span></div>
   </div>
 </div>
 
-<div id="graph"></div>
+<div id="graph" role="region" aria-label="Interactive reconstruction of observed growth in the final surviving concept graph. Use the search field or problem list for text-based inspection."></div>
+<div id="graph-legend" aria-label="Path-domain-count color legend through the selected reconstruction step">
+  <span class="legend-title">Path domains through step</span>
+  <span class="legend-item"><span class="legend-dot" style="color:#3f3f46;background:#3f3f46"></span>0</span>
+  <span class="legend-item"><span class="legend-dot" style="color:#7c83d5;background:#7c83d5"></span>1</span>
+  <span class="legend-item"><span class="legend-dot" style="color:#89b4fa;background:#89b4fa"></span>2</span>
+  <span class="legend-item"><span class="legend-dot" style="color:#a6e3a1;background:#a6e3a1"></span>3–4</span>
+  <span class="legend-item"><span class="legend-dot" style="color:#f9e2af;background:#f9e2af"></span>5–6</span>
+  <span class="legend-item"><span class="legend-dot" style="color:#fab387;background:#fab387"></span>7–9</span>
+  <span class="legend-item"><span class="legend-dot" style="color:#f38ba8;background:#f38ba8"></span>10+</span>
+</div>
 
 <div id="side-panel">
   <div id="panel-default">
-    <h2>Click a node to inspect</h2>
+    <h2>Inspect observed growth</h2>
     <p style="font-size:11px;color:var(--text-2);margin-bottom:14px;">
-      Or pick a problem below to highlight its routing path.
+      Click a node for canonical saved-path activity, or choose a problem to inspect its saved planning trace.
     </p>
+    <p class="scope-note">Observed growth reconstructs the surviving graph: problem-attributed nodes appear at their recorded problem and maintenance nodes at the checkpoint implied by their monotonic IDs. Links are final surviving relationships shown once their endpoints are visible; edge rewrites and deleted nodes cannot be replayed exactly.</p>
     <h3 style="font-size:10px;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-2);margin-bottom:8px;font-weight:500;">Problems</h3>
     <div class="problem-list" id="problem-list"></div>
   </div>
-  <div id="panel-node" style="display:none;"></div>
+  <div id="panel-node" style="display:none;" aria-live="polite" tabindex="-1"></div>
 </div>
 
 <div id="bottom-panel">
   <div class="chart-box">
-    <h3>Reuse Curve</h3>
-    <canvas id="reuse-chart"></canvas>
+    <h3>Structural Reuse</h3>
+    <canvas id="reuse-chart" role="img" aria-label="Structural reuse percentage across the 100 saved planning problems"></canvas>
   </div>
   <div class="chart-box">
-    <h3>Budget Allocation</h3>
-    <canvas id="budget-chart"></canvas>
+    <h3>Planning-Node Budget</h3>
+    <canvas id="budget-chart" role="img" aria-label="Planning-node budget used and remaining for each saved problem"></canvas>
   </div>
 </div>
 
@@ -341,99 +415,185 @@ const DC = {
 };
 
 let treeData, statsData, graph, reuseChart, budgetChart;
-let currentStep = 100, isPlaying = false;
+let currentStep = 100, isPlaying = false, selectedProblemId = null, playTimer = null;
+let nodesById = new Map(), nodesByConcept = new Map();
+let observedAtByNode = new Map();
+let tooltipMoveHandler = null;
+
+function escapeHtml(value) {
+  return String(value ?? '')
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#039;');
+}
+
+async function fetchJson(path) {
+  const response = await fetch(path);
+  if (!response.ok) throw new Error(`${path}: HTTP ${response.status}`);
+  return response.json();
+}
+
+function prepareData() {
+  nodesById = new Map(treeData.nodes.map(node => [node.id, node]));
+  nodesByConcept = new Map();
+  observedAtByNode = new Map();
+  let latestProblem = 0;
+  const orderedNodes = [...treeData.nodes].sort((a, b) => nodeNumber(a) - nodeNumber(b));
+  orderedNodes.forEach(node => {
+    const candidates = nodesByConcept.get(node.concept) || [];
+    candidates.push(node);
+    nodesByConcept.set(node.concept, candidates);
+
+    const numericId = nodeNumber(node);
+    const legacyInitialSeed =
+      !node.origin &&
+      String(node.id).startsWith('solver_') &&
+      numericId >= 1 && numericId <= 29;
+    if (node.origin === 'initial_seed' || legacyInitialSeed) {
+      observedAtByNode.set(node.id, 0);
+    } else if (node.created_by_problem > 0) {
+      latestProblem = Math.max(latestProblem, node.created_by_problem);
+      observedAtByNode.set(node.id, node.created_by_problem);
+    } else if (node.origin === 'maintenance' && node.created_after_problem > 0) {
+      observedAtByNode.set(node.id, node.created_after_problem);
+    } else {
+      // The legacy snapshot omitted maintenance timestamps. Node IDs are
+      // monotonic, and maintenance ran at ten-problem checkpoints, so the
+      // preceding problem-attributed ID locates the surviving node's checkpoint.
+      observedAtByNode.set(node.id, Math.ceil(latestProblem / 10) * 10);
+    }
+  });
+}
+
+function nodeNumber(node) {
+  return Number(String(node?.id || node || '').replace('solver_', '')) || 0;
+}
+
+function resolveStepNode(step, routingPath) {
+  if (step.node && step.node !== '?' && nodesById.has(step.node)) return step.node;
+  const candidates = nodesByConcept.get(step.concept) || [];
+  const createdHere = candidates.filter(node => node.created_by_problem === routingPath.problem_id);
+  if (createdHere.length === 1) return createdHere[0].id;
+  return null;
+}
+
+function activityThrough(maxProblem) {
+  const paths = treeData.routing_paths.filter(path => path.problem_id <= maxProblem);
+  const nodeActivity = new Map();
+  const conceptActivity = new Map();
+
+  function add(map, key, path) {
+    if (!key) return;
+    const activity = map.get(key) || { count: 0, domains: new Set(), problems: new Set(), firstDomain: null };
+    activity.count += 1;
+    activity.domains.add(path.domain);
+    activity.problems.add(path.problem_id);
+    if (!activity.firstDomain) activity.firstDomain = path.domain;
+    map.set(key, activity);
+  }
+
+  paths.forEach(path => {
+    path.path.forEach(step => {
+      add(conceptActivity, step.concept, path);
+      add(nodeActivity, resolveStepNode(step, path), path);
+    });
+  });
+  return { paths, nodeActivity, conceptActivity };
+}
 
 async function load() {
+  const loading = document.getElementById('loading');
   try {
     [treeData, statsData] = await Promise.all([
-      fetch('tree.json').then(r => r.json()),
-      fetch('stats.json').then(r => r.json()),
+      fetchJson('tree.json'),
+      fetchJson('stats.json'),
     ]);
-    document.getElementById('loading').style.display = 'none';
+    if (!window.ForceGraph3D || !window.Chart) {
+      throw new Error('A visualization dependency failed to load.');
+    }
+    prepareData();
     init();
+    loading.style.display = 'none';
   } catch(e) {
-    document.querySelector('#loading p').textContent = 'Run solver.py first to generate tree.json';
+    console.error(e);
+    loading.style.display = 'flex';
+    document.querySelector('#loading p').textContent =
+      'Could not load the saved visualization. Serve the prototype directory over HTTP and check the browser console.';
   }
 }
 
 function dcColor(c) {
+  if (c === 0) return '#3f3f46';
   if (c >= 10) return '#f38ba8';  // rose
   if (c >= 7) return '#fab387';   // peach
   if (c >= 5) return '#f9e2af';   // yellow
   if (c >= 3) return '#a6e3a1';   // green
   if (c >= 2) return '#89b4fa';   // blue
-  return '#6c7086';               // overlay
+  return '#7c83d5';               // indigo: active within one domain
 }
 function invColor(c) {
+  if (c === 0) return '#3f3f46';
   if (c >= 15) return '#f38ba8';
   if (c >= 10) return '#fab387';
   if (c >= 5) return '#f9e2af';
   if (c >= 3) return '#a6e3a1';
-  return '#6c7086';
+  return '#7c83d5';
 }
 
 function buildData(maxP) {
   const nodes = [], links = [];
   const showProblems = document.getElementById('show-problems').value === 'show';
-  const solvers = treeData.nodes.filter(n => n.created_by_problem <= maxP);
-  const nodeMap = {};
-  solvers.forEach(n => { nodeMap[n.id] = n; });
-
-  solvers.forEach(n => { n._inv = 0; n._doms = new Set(); });
-  const paths = treeData.routing_paths.filter(rp => rp.problem_id <= maxP);
-  paths.forEach(rp => {
-    rp.path.forEach(s => {
-      const n = nodeMap[s.node];
-      if (n) { n._inv++; n._doms.add(rp.domain); }
-    });
-  });
+  const solvers = treeData.nodes.filter(node => (observedAtByNode.get(node.id) ?? maxP) <= maxP);
+  const visibleIds = new Set(solvers.map(node => node.id));
+  const { paths, nodeActivity, conceptActivity } = activityThrough(maxP);
 
   // Find max invocations for scaling
   let maxInv = 1;
-  solvers.forEach(n => { if ((n._inv||0) > maxInv) maxInv = n._inv; });
-
-  const roots = new Set();
-  const edges = treeData.edges.filter(e => e.problem_id <= maxP);
-  edges.forEach(e => { if (e.source.startsWith('root_')) roots.add(e.source); });
+  nodeActivity.forEach(activity => { if (activity.count > maxInv) maxInv = activity.count; });
 
   const cm = document.getElementById('color-mode').value;
+  document.getElementById('graph-legend').style.display = cm === 'domains' ? 'flex' : 'none';
 
   // RootSolver — the central node everything flows through
   const totalProblems = paths.length;
   nodes.push({
     id: 'ROOT_SOLVER',
     name: 'RootSolver',
-    desc: 'The central solver that receives all problems and routes them through conceptual decomposition.',
+    desc: 'A view-only root that groups the final concept graph and saved problem overlays.',
     val: Math.max(6, 3 + totalProblems * 0.3),
     color: '#5eead4',
-    inv: totalProblems, dc: 20,
-    _isRoot: false, _isRootSolver: true,
-    _data: { concept: 'RootSolver', description: 'Routes all problems through conceptual decomposition', depth: 0, id: 'ROOT_SOLVER', created_by_problem: 0,
-      manifest: { bounds: 'All problem domains', not_in_scope: 'Direct solving — delegates to concept solvers' },
-      feedback: { times_invoked: totalProblems, domains_served: [...new Set(paths.map(p=>p.domain))], problems_routed: paths.map(p=>p.problem_id) },
-      consult: { estimated_quality_gain: 1.0 }, verify: { test_vectors: [] } },
+    inv: totalProblems, dc: new Set(paths.map(path => path.domain)).size,
+    _isProblem: false, _isRootSolver: true,
+    _activity: {
+      count: totalProblems,
+      domains: new Set(paths.map(path => path.domain)),
+      problems: new Set(paths.map(path => path.problem_id)),
+    },
   });
 
-  // Concept solver nodes — size scales dramatically with invocations
+  // Surviving Solver nodes revealed at the point supported by the saved artifact.
   solvers.forEach(n => {
-    const inv = n._inv || 1;
-    const dc = n._doms ? n._doms.size : 1;
+    const activity = nodeActivity.get(n.id) || { count: 0, domains: new Set(), problems: new Set(), firstDomain: null };
+    const inv = activity.count;
+    const dc = activity.domains.size;
     let color;
     if (cm === 'domains') color = dcColor(dc);
     else if (cm === 'invocations') color = invColor(inv);
-    else color = DC[n.feedback.domains_served[0]] || '#71717a';
+    else color = DC[activity.firstDomain] || '#3f3f46';
 
-    // Dramatic size scaling: small for 1 use, large for highway nodes
+    // Newly observed nodes remain visible before their first linked path activity.
     const sizeRatio = inv / maxInv;
-    const val = 1 + sizeRatio * 8;
+    const val = inv === 0 ? 0.6 : 1 + sizeRatio * 8;
 
     nodes.push({
       id: n.id, name: n.concept, desc: n.description,
-      val, color, inv, dc, _data: n, _isRoot: false,
+      val, color, inv, dc, _data: n, _activity: activity, _isProblem: false,
     });
 
     // Edge from RootSolver to each top-level concept
-    if (n.depth <= 1) {
+    if (n.depth === 1) {
       links.push({
         source: 'ROOT_SOLVER', target: n.id,
         color: '#5eead440', width: Math.min(0.5 + inv * 0.3, 4),
@@ -443,31 +603,32 @@ function buildData(maxP) {
 
   const edgeSet = new Set();
   const edgeCount = {};
-  edges.forEach(e => { const k = `${e.source}|${e.target}`; edgeCount[k] = (edgeCount[k]||0)+1; });
+  treeData.edges.forEach(e => { const k = `${e.source}|${e.target}`; edgeCount[k] = (edgeCount[k]||0)+1; });
 
   // Problem nodes from routing_paths (small diamonds at the periphery)
   if (showProblems && treeData.routing_paths) {
-    const pathsAtStep = treeData.routing_paths.filter(rp => rp.problem_id <= maxP);
-    pathsAtStep.forEach(rp => {
+    paths.forEach(rp => {
       const rid = `problem_${rp.problem_id}`;
       const dom = rp.domain;
+      const selected = rp.problem_id === selectedProblemId;
       nodes.push({
         id: rid,
         name: `#${rp.problem_id}: ${rp.problem_text.substring(0,35)}...`,
-        desc: rp.problem_text, val: 0.3,
+        desc: rp.problem_text, val: selected ? 0.8 : 0.3,
         color: DC[dom] || '#52525b',
-        inv: 0, dc: 0, _isRoot: true, _domain: dom, _pid: rp.problem_id,
+        inv: 0, dc: 0, _isProblem: true, _domain: dom, _pid: rp.problem_id,
       });
       // Connect problem to all solvers it used
       (rp.path || []).forEach(step => {
-        if (step.node && nodeMap[step.node]) {
-          const k = `${rid}|${step.node}`;
+        const nodeId = resolveStepNode(step, rp);
+        if (nodeId && visibleIds.has(nodeId)) {
+          const k = `${rid}|${nodeId}`;
           if (!edgeSet.has(k)) {
             edgeSet.add(k);
             links.push({
-              source: rid, target: step.node,
-              color: (DC[dom]||'#3f3f46') + '30',
-              width: 0.2,
+              source: rid, target: nodeId,
+              color: selected ? '#5eead4' : (DC[dom]||'#3f3f46') + '30',
+              width: selected ? 1.5 : 0.2,
             });
           }
         }
@@ -475,8 +636,9 @@ function buildData(maxP) {
     });
   }
 
-  edges.forEach(e => {
-    if (!nodeMap[e.source] || !nodeMap[e.target]) return;
+  treeData.edges.forEach(e => {
+    if (!visibleIds.has(e.source) || !visibleIds.has(e.target)) return;
+    if ((e.problem_id || 0) > maxP) return;
     const k = `${e.source}|${e.target}`;
     if (edgeSet.has(k)) return;
     edgeSet.add(k);
@@ -487,24 +649,12 @@ function buildData(maxP) {
     });
   });
 
-  solvers.forEach(n => {
-    (n.parent_ids||[]).forEach(pid => {
-      if (!nodeMap[pid]) return;
-      const k = `${pid}|${n.id}`;
-      if (edgeSet.has(k)) return;
-      edgeSet.add(k);
-      links.push({ source: pid, target: n.id, color: '#ffffff18', width: 0.8 });
-    });
-  });
-
   // Stats
   const ts = paths.reduce((s,rp) => s + rp.path.length, 0);
   const rs = paths.reduce((s,rp) => s + rp.path.filter(p => p.action==='reused').length, 0);
   const rPct = ts > 0 ? Math.round(rs/ts*100) : 0;
-  const domSets = {};
-  solvers.forEach(n => { domSets[n.id] = n._doms || new Set(); });
-  const hw = Object.values(domSets).filter(s => s.size >= 3).length;
-  document.getElementById('s-nodes').textContent = solvers.length;
+  const hw = [...conceptActivity.values()].filter(activity => activity.domains.size >= 3).length;
+  document.getElementById('s-nodes').textContent = `${solvers.length} / ${treeData.nodes.length}`;
   document.getElementById('s-reuse').textContent = rPct + '%';
   document.getElementById('s-highways').textContent = hw;
 
@@ -512,7 +662,7 @@ function buildData(maxP) {
 }
 
 function init() {
-  const maxP = treeData.routing_paths.length;
+  const maxP = Math.max(...treeData.routing_paths.map(path => path.problem_id));
   const slider = document.getElementById('step-slider');
   slider.max = maxP; slider.value = maxP; currentStep = maxP;
   document.getElementById('step-display').textContent = `${maxP} / ${maxP}`;
@@ -528,50 +678,6 @@ function init() {
     .nodeVal(n => n.val)
     .nodeRelSize(4)
     .nodeOpacity(0.92)
-    .nodeThreeObject(node => {
-      if (node._isRoot) return false;
-      try {
-        const T = window.THREE || THREE;
-        const group = new T.Group();
-        const inv = node.inv || 1;
-        const radius = node._isRootSolver ? 5 : Math.max(1.5, 1 + Math.sqrt(node.val) * 1.2);
-        // Core sphere
-        const geo = new T.SphereGeometry(radius, 16, 16);
-        const mat = new T.MeshBasicMaterial({ color: node.color, transparent: true, opacity: 0.92 });
-        group.add(new T.Mesh(geo, mat));
-        // Glow halo
-        const spriteMat = new T.SpriteMaterial({
-          map: createGlowTexture(T),
-          color: node.color,
-          transparent: true,
-          opacity: node._isRootSolver ? 0.4 : 0.15 + Math.min(inv * 0.02, 0.4),
-          blending: T.AdditiveBlending,
-          depthWrite: false,
-        });
-        const sprite = new T.Sprite(spriteMat);
-        const gs = node._isRootSolver ? 30 : Math.max(6, radius * 3 + inv * 0.8);
-        sprite.scale.set(gs, gs, 1);
-        group.add(sprite);
-        // Label
-        const c = document.createElement('canvas');
-        const ctx = c.getContext('2d');
-        c.width = 512; c.height = 64;
-        ctx.fillStyle = '#ffffff';
-        const fs = node._isRootSolver ? 28 : Math.max(18, Math.min(26, 16 + inv * 0.5));
-        ctx.font = `600 ${fs}px Inter, sans-serif`;
-        ctx.textAlign = 'center';
-        ctx.fillText(node.name, 256, 40);
-        const tex = new T.CanvasTexture(c);
-        const lm = new T.SpriteMaterial({ map: tex, transparent: true, opacity: 0.8, depthWrite: false });
-        const label = new T.Sprite(lm);
-        const ls = node._isRootSolver ? 28 : Math.max(16, 14 + inv * 0.3);
-        label.scale.set(ls, ls * 64/512, 1);
-        label.position.set(0, radius + 3, 0);
-        group.add(label);
-        return group;
-      } catch(e) { console.error('nodeThreeObject error:', e); return false; }
-    })
-    .nodeThreeObjectExtend(false)
     .linkColor(l => l.color)
     .linkWidth(l => l.width)
     .linkOpacity(0.5)
@@ -590,11 +696,8 @@ function init() {
   });
 
   slider.addEventListener('input', () => {
-    currentStep = parseInt(slider.value);
-    document.getElementById('step-display').textContent = `${currentStep} / ${maxP}`;
-    graph.graphData(buildData(currentStep));
-    updateReuseChart(currentStep);
-    updateBudgetChart(currentStep);
+    stopPlayback();
+    setStep(parseInt(slider.value));
   });
 
   document.getElementById('color-mode').addEventListener('change', () => {
@@ -608,6 +711,7 @@ function init() {
   document.getElementById('search-input').addEventListener('input', e => {
     const q = e.target.value.toLowerCase();
     if (!q) return;
+    stopPlayback();
     const gd = graph.graphData();
     const m = gd.nodes.find(n => n.name && n.name.toLowerCase().includes(q));
     if (m && m.x !== undefined) {
@@ -623,46 +727,65 @@ function init() {
   setTimeout(() => graph.zoomToFit(500, 60), 2800);
 }
 
-// Glow texture
-let _glowTex;
-function createGlowTexture(T) {
-  if (_glowTex) return _glowTex;
-  T = T || window.THREE || THREE;
-  const size = 128;
-  const c = document.createElement('canvas');
-  c.width = size; c.height = size;
-  const ctx = c.getContext('2d');
-  const grad = ctx.createRadialGradient(size/2, size/2, 0, size/2, size/2, size/2);
-  grad.addColorStop(0, 'rgba(255,255,255,1)');
-  grad.addColorStop(0.15, 'rgba(255,255,255,0.6)');
-  grad.addColorStop(0.5, 'rgba(255,255,255,0.1)');
-  grad.addColorStop(1, 'rgba(255,255,255,0)');
-  ctx.fillStyle = grad;
-  ctx.fillRect(0,0,size,size);
-  _glowTex = new T.CanvasTexture(c);
-  return _glowTex;
+function setStep(step, keepPanel = false) {
+  const slider = document.getElementById('step-slider');
+  const max = parseInt(slider.max);
+  currentStep = Math.max(0, Math.min(step, max));
+  slider.value = currentStep;
+  document.getElementById('step-display').textContent = `${currentStep} / ${max}`;
+  if (!keepPanel) {
+    selectedProblemId = null;
+    document.getElementById('panel-default').style.display = 'block';
+    document.getElementById('panel-node').style.display = 'none';
+    document.getElementById('side-panel').scrollTop = 0;
+  }
+  graph.graphData(buildData(currentStep));
+  updateReuseChart(currentStep);
+  updateBudgetChart(currentStep);
 }
 
 function onHover(node) {
   const tt = document.getElementById('tooltip');
+  if (tooltipMoveHandler) {
+    document.removeEventListener('mousemove', tooltipMoveHandler);
+    tooltipMoveHandler = null;
+  }
   if (!node) { tt.style.display = 'none'; document.body.style.cursor = 'default'; return; }
   document.body.style.cursor = 'pointer';
   tt.querySelector('.tt-name').textContent = node.name;
-  tt.querySelector('.tt-sub').textContent = node._isRoot
+  tt.querySelector('.tt-sub').textContent = node._isProblem
     ? (node._domain||'').replace(/_/g,' ')
-    : `${node.inv} invocations · ${node.dc} domains`;
+    : `${node.inv} saved-path appearances · ${node.dc} domains`;
   tt.querySelector('.tt-desc').textContent = node.desc || '';
   tt.style.display = 'block';
   tt.style.borderLeftColor = node.color;
-  const onM = e => { tt.style.left = (e.clientX+16)+'px'; tt.style.top = (e.clientY-10)+'px'; };
-  document.addEventListener('mousemove', onM);
-  if (node._rm) node._rm();
-  node._rm = () => document.removeEventListener('mousemove', onM);
+  tooltipMoveHandler = e => { tt.style.left = (e.clientX+16)+'px'; tt.style.top = (e.clientY-10)+'px'; };
+  document.addEventListener('mousemove', tooltipMoveHandler);
+}
+
+function provenanceText(node) {
+  if (node.origin === 'initial_seed') return 'initial scaffold';
+  if (node.origin === 'maintenance') {
+    return node.created_after_problem > 0
+      ? `maintenance after problem #${node.created_after_problem}`
+      : 'maintenance-created; exact checkpoint not recorded';
+  }
+  if (node.origin === 'problem' && node.created_by_problem > 0) {
+    return `problem #${node.created_by_problem}`;
+  }
+  const nodeNumber = Number(String(node.id || '').replace('solver_', ''));
+  if (node.created_by_problem > 0) return `problem #${node.created_by_problem}`;
+  if (nodeNumber >= 1 && nodeNumber <= 29) return 'initial scaffold';
+  const observedAt = observedAtByNode.get(node.id);
+  return observedAt > 0
+    ? `maintenance checkpoint after problem #${observedAt} (reconstructed)`
+    : 'maintenance-created; exact checkpoint not recorded';
 }
 
 function onClick(node) {
   if (!node) return;
-  if (node._isRoot && node._pid) {
+  stopPlayback();
+  if (node._isProblem && node._pid) {
     const rp = treeData.routing_paths.find(r => r.problem_id === node._pid);
     if (rp) showPath(rp);
     return;
@@ -670,106 +793,142 @@ function onClick(node) {
   if (node.x !== undefined) {
     graph.cameraPosition({ x:node.x, y:node.y, z:node.z+120 }, { x:node.x, y:node.y, z:node.z }, 800);
   }
+  if (node._isRootSolver) {
+    document.getElementById('panel-default').style.display = 'none';
+    const panel = document.getElementById('panel-node');
+    panel.style.display = 'block';
+    panel.innerHTML = `
+      <div class="ntitle">RootSolver</div>
+      <div class="nsub">visualization aid · ${node.inv} saved problems · ${node.dc} domains</div>
+      <div class="ndesc">This view-only root groups the final concept graph and problem overlays. It is not one of the 456 stored nodes and does not imply that child Solvers executed domain work in this planning run.</div>
+      <button class="back-btn" onclick="hidePanel()">Back to list</button>`;
+    document.getElementById('side-panel').scrollTop = 0;
+    return;
+  }
+
   const d = node._data || node;
-  const fb = d.feedback || {};
+  const activity = node._activity || { count: 0, domains: new Set(), problems: new Set() };
   const mn = d.manifest || {};
-  const doms = fb.domains_served || [];
-  const probs = fb.problems_routed || [];
+  const doms = [...activity.domains];
+  const probs = [...activity.problems].sort((a, b) => a - b);
 
   document.getElementById('panel-default').style.display = 'none';
   const panel = document.getElementById('panel-node');
   panel.style.display = 'block';
   panel.innerHTML = `
-    <div class="ntitle">${d.concept || node.name}</div>
-    <div class="nsub">${fb.times_invoked||node.inv||0} invocations · ${doms.length} domains</div>
-    <div class="ndesc">${d.description || ''}</div>
+    <div class="ntitle">${escapeHtml(d.concept || node.name)}</div>
+    <div class="nsub">${activity.count} saved-path appearances · ${doms.length} domains · through problem #${currentStep}</div>
+    <div class="ndesc">${escapeHtml(d.description || '')}</div>
     <div class="card">
       <h3>Manifest</h3>
-      <p><b>Bounds:</b> ${mn.bounds || '—'}</p>
-      <p><b>Not in scope:</b> ${mn.not_in_scope || '—'}</p>
+      <p><b>Bounds:</b> ${escapeHtml(mn.bounds || '—')}</p>
+      <p><b>Not in scope:</b> ${escapeHtml(mn.not_in_scope || '—')}</p>
     </div>
     <div class="card">
-      <h3>Domains</h3>
-      <div>${doms.map(d => `<span class="dtag" style="--dc:${DC[d]||'#555'}"><span style="background:var(--dc);width:5px;height:5px;border-radius:50%;display:inline-block;box-shadow:0 0 6px var(--dc)"></span>${d.replace(/_/g,' ')}</span>`).join('')}</div>
+      <h3>Saved-path domains</h3>
+      <div>${doms.length ? doms.map(domain => `<span class="dtag" style="--dc:${DC[domain]||'#555'}"><span style="background:var(--dc);width:5px;height:5px;border-radius:50%;display:inline-block;box-shadow:0 0 6px var(--dc)"></span>${escapeHtml(domain.replace(/_/g,' '))}</span>`).join('') : '<span style="font-size:11px;color:var(--text-2)">No canonical path activity through this step.</span>'}</div>
     </div>
     <div class="card">
-      <h3>Problems (${probs.length})</h3>
+      <h3>Saved problems (${probs.length})</h3>
       <ul>${probs.slice(0,12).map(pid => {
         const rp = treeData.routing_paths.find(r => r.problem_id === pid);
-        return `<li>#${pid}: ${rp ? rp.problem_text : ''}</li>`;
+        return `<li>#${pid}: ${escapeHtml(rp ? rp.problem_text : '')}</li>`;
       }).join('')}${probs.length > 12 ? `<li style="color:var(--text-2)">+${probs.length-12} more</li>` : ''}</ul>
     </div>
     ${(d.verify && d.verify.test_vectors && d.verify.test_vectors.length > 0) ? `
     <div class="card">
-      <h3>Verify (Acceptance Tests)</h3>
-      <ul>${d.verify.test_vectors.map(t => `<li>${t}</li>`).join('')}</ul>
+      <h3>Generated verification questions</h3>
+      <p style="color:var(--text-2);margin-bottom:5px;">Stored planning prompts; not run or scored.</p>
+      <ul>${d.verify.test_vectors.map(t => `<li>${escapeHtml(t)}</li>`).join('')}</ul>
     </div>` : ''}
     <div class="card">
       <h3>Metadata</h3>
       <p style="font-family:'JetBrains Mono',monospace;font-size:10px;">
-        depth: ${d.depth||0} &middot; id: ${d.id||node.id} &middot; created_by: #${d.created_by_problem||'?'}
+        final depth: ${d.depth||0} &middot; id: ${escapeHtml(d.id||node.id)}<br>origin: ${escapeHtml(provenanceText(d))}
       </p>
     </div>
     <button class="back-btn" onclick="hidePanel()">Back to list</button>
   `;
+  document.getElementById('side-panel').scrollTop = 0;
 }
 
 function showPath(rp) {
+  if (rp.problem_id > currentStep) setStep(rp.problem_id, true);
+  selectedProblemId = rp.problem_id;
+  if (graph) graph.graphData(buildData(currentStep));
   document.getElementById('panel-default').style.display = 'none';
   const panel = document.getElementById('panel-node');
   panel.style.display = 'block';
 
   // Use full narrative trace if available, otherwise fall back to path
   const trace = rp.trace || rp.path;
+  const actionStyle = {
+    reused: ['♻', '#a6e3a1', 'reused'],
+    created: ['✦', '#f9e2af', 'proposed new'],
+    mvr_approved: ['↓', '#89dceb', 'depth approved'],
+    mvr_override: ['×', '#fab387', 'depth stopped'],
+    routing_clean: ['✓', '#a6e3a1', 'routing check'],
+    leaky_seam: ['!', '#f38ba8', 'seam diagnostic'],
+    restructure: ['↗', '#cba6f7', 'restructure'],
+    receive: ['▸', '#5eead4', 'received'],
+    complete: ['▪', '#5eead4', 'complete'],
+    summary: ['▪', '#5eead4', 'summary'],
+  };
   const traceHtml = trace.map(t => {
     const depth = t.depth || 0;
-    const indent = '&nbsp;'.repeat(depth * 4);
-    const color = t.action === 'reused' ? '#a6e3a1' :
-                  t.action === 'created' ? '#f9e2af' :
-                  t.action === 'mvr_decompose' ? '#89dceb' :
-                  t.action === 'receive' ? '#5eead4' :
-                  t.action === 'complete' || t.action === 'summary' ? '#5eead4' :
-                  '#9399b2';
-    const icon = t.action === 'reused' ? '♻' :
-                 t.action === 'created' ? '✦' :
-                 t.action === 'mvr_decompose' ? '↓' :
-                 t.action === 'mvr_stop' ? '·' :
-                 t.action === 'receive' ? '▸' :
-                 t.action === 'complete' || t.action === 'summary' ? '▪' :
-                 '·';
-    const produces = t.what_it_produces ? `<div style="margin:2px 0 6px ${depth * 4 * 6 + 16}px;font-size:11px;color:#6b8a7a;border-left:2px solid #2a3a2a;padding-left:8px;">→ ${t.what_it_produces}</div>` : '';
-    return `<div style="margin:3px 0;font-size:11px;line-height:1.5;">
-      ${indent}<span style="color:${color}">${icon}</span>
-      <span style="color:${t.node ? '#e4e4e7' : '#9399b2'}">${t.narrative || t.concept || ''}</span>
+    const [icon, color, label] = actionStyle[t.action] || ['·', '#9399b2', t.action || 'event'];
+    const produces = t.what_it_produces ? `<div style="margin:2px 0 6px ${depth * 12 + 16}px;font-size:11px;color:#6b8a7a;border-left:2px solid #2a3a2a;padding-left:8px;"><b>Proposed output:</b> ${escapeHtml(t.what_it_produces)}</div>` : '';
+    return `<div style="margin:3px 0 3px ${depth * 12}px;font-size:11px;line-height:1.5;">
+      <span style="color:${color}" title="${escapeHtml(label)}">${icon}</span>
+      <span style="color:${t.node ? '#e4e4e7' : '#9399b2'}">${escapeHtml(t.narrative || t.concept || '')}</span>
     </div>${produces}`;
   }).join('');
+  const unresolved = rp.path.filter(step => !resolveStepNode(step, rp)).length;
 
   panel.innerHTML = `
     <div class="ntitle">Problem #${rp.problem_id}</div>
-    <div class="nsub">${rp.domain.replace(/_/g,' ')} · budget: ${rp.budget} (used: ${rp.budget_used})</div>
-    <div class="ndesc">${rp.problem_text}</div>
+    <div class="nsub">${escapeHtml(rp.domain.replace(/_/g,' '))} · planning-node budget: ${rp.budget} (used: ${rp.budget_used})</div>
+    <div class="ndesc">${escapeHtml(rp.problem_text)}</div>
+    <div class="scope-note"><span style="display:inline-block;width:8px;height:3px;margin:0 6px 2px 0;background:#5eead4;box-shadow:0 0 6px #5eead4;"></span>Bright teal links highlight this selected problem's saved route; they do not indicate quality or creation time.</div>
     <div class="card">
-      <h3>Execution Trace</h3>
+      <h3>Planning Trace</h3>
+      <p style="color:var(--text-2);margin-bottom:8px;">This trace records planning and graph operations. Proposed outputs describe work a future Solver might perform; they were not executed.</p>
       ${traceHtml}
     </div>
+    ${unresolved ? `<div class="scope-note">${unresolved} proposed-new ${unresolved === 1 ? 'concept is' : 'concepts are'} absent from the final surviving graph and therefore cannot be linked from this trace.</div>` : ''}
     <button class="back-btn" onclick="hidePanel()">Back to list</button>
   `;
+  document.getElementById('side-panel').scrollTop = 0;
 }
 
 function hidePanel() {
+  selectedProblemId = null;
   document.getElementById('panel-default').style.display = 'block';
   document.getElementById('panel-node').style.display = 'none';
+  document.getElementById('side-panel').scrollTop = 0;
+  if (graph) graph.graphData(buildData(currentStep));
 }
 
 function buildProblemList() {
   const list = document.getElementById('problem-list');
   treeData.routing_paths.forEach(rp => {
-    const div = document.createElement('div');
-    div.className = 'problem-item';
-    div.innerHTML = `<span class="pid">#${rp.problem_id}</span> <span class="pdom">${rp.domain.replace(/_/g,' ')}</span><br>${rp.problem_text}`;
-    div.addEventListener('click', () => showPath(rp));
-    list.appendChild(div);
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'problem-item';
+    button.setAttribute('aria-controls', 'panel-node');
+    button.innerHTML = `<span class="pid">#${rp.problem_id}</span> <span class="pdom">${escapeHtml(rp.domain.replace(/_/g,' '))}</span><br>${escapeHtml(rp.problem_text)}`;
+    button.addEventListener('click', () => {
+      stopPlayback();
+      setStep(rp.problem_id, true);
+      showPath(rp);
+    });
+    list.appendChild(button);
   });
+}
+
+function rollingReuseFor(problems) {
+  const byProblem = new Map((statsData.rolling_reuse || []).map(row => [row.problem, row.rolling_avg * 100]));
+  return problems.map(problem => byProblem.get(problem) ?? null);
 }
 
 function buildReuseChart() {
@@ -791,7 +950,7 @@ function buildReuseChart() {
         },
         {
           label: 'Trend (10-avg)',
-          data: (statsData.rolling_reuse || []).map(r => r.rolling_avg * 100),
+          data: rollingReuseFor(statsData.reuse_curve.map(r => r.problem)),
           borderColor: '#5eead4', backgroundColor: 'transparent',
           fill: false, tension: 0.4, pointRadius: 0, borderWidth: 2.5,
         },
@@ -810,17 +969,16 @@ function buildReuseChart() {
 
 function updateReuseChart(step) {
   if (!reuseChart || !statsData) return;
-  const d = statsData.reuse_curve.slice(0, step);
-  const r = (statsData.rolling_reuse || []).slice(0, step);
+  const d = statsData.reuse_curve.filter(row => row.problem <= step);
   reuseChart.data.labels = d.map(x => x.problem);
   reuseChart.data.datasets[0].data = d.map(x => x.reuse_pct * 100);
-  reuseChart.data.datasets[1].data = r.map(x => x.rolling_avg * 100);
+  reuseChart.data.datasets[1].data = rollingReuseFor(d.map(x => x.problem));
   reuseChart.update('none');
 }
 
 function updateBudgetChart(step) {
   if (!budgetChart || !statsData) return;
-  const d = statsData.budget_allocation.slice(0, step);
+  const d = statsData.budget_allocation.filter(row => row.problem <= step);
   budgetChart.data.labels = d.map(b => b.problem);
   budgetChart.data.datasets[0].data = d.map(b => b.spent);
   budgetChart.data.datasets[1].data = d.map(b => b.budget - b.spent);
@@ -852,64 +1010,37 @@ function buildBudgetChart() {
 
 function togglePlay() {
   const btn = document.getElementById('play-btn');
-  if (isPlaying) { isPlaying = false; btn.textContent = 'Play'; return; }
+  if (isPlaying) {
+    stopPlayback();
+    return;
+  }
   isPlaying = true; btn.textContent = 'Pause';
   const slider = document.getElementById('step-slider');
   const max = parseInt(slider.max);
 
-  // Start from current position, or from 1 if already at the end
-  let step = currentStep >= max ? 1 : currentStep + 1;
-  if (step === 1) {
-    graph.graphData(buildData(0));
-  }
+  // Continue forward, or replay the reconstruction from its initial scaffold.
+  let step = currentStep >= max ? 0 : currentStep + 1;
+  hidePanel();
 
   function tick() {
-    if (!isPlaying || step > max) { isPlaying = false; btn.textContent = 'Play'; return; }
-    slider.value = step; currentStep = step;
-    document.getElementById('step-display').textContent = `${step} / ${max}`;
-
-    const newData = buildData(step);
-    const currentData = graph.graphData();
-    const currentNodeMap = {};
-    currentData.nodes.forEach(n => { currentNodeMap[n.id] = n; });
-
-    // Find truly new nodes and edges this step
-    const newNodes = newData.nodes.filter(n => !currentNodeMap[n.id]);
-    const currentEdgeSet = new Set(currentData.links.map(l => {
-      const sid = typeof l.source === 'object' ? l.source.id : l.source;
-      const tid = typeof l.target === 'object' ? l.target.id : l.target;
-      return `${sid}|${tid}`;
-    }));
-    const newLinks = newData.links.filter(l => !currentEdgeSet.has(`${l.source}|${l.target}`));
-
-    // Update existing nodes in-place (smooth size growth)
-    currentData.nodes.forEach(existingNode => {
-      const updated = newData.nodes.find(n => n.id === existingNode.id);
-      if (updated) {
-        const targetVal = updated.val;
-        existingNode.val = existingNode.val + (targetVal - existingNode.val) * 0.5;
-        existingNode.inv = updated.inv;
-        existingNode.dc = updated.dc;
-        existingNode.color = updated.color;
-      }
-    });
-
-    // Add new nodes and edges
-    if (newNodes.length > 0 || newLinks.length > 0) {
-      graph.graphData({
-        nodes: [...currentData.nodes, ...newNodes],
-        links: [...currentData.links, ...newLinks],
-      });
-    } else {
-      graph.nodeVal(graph.nodeVal());
+    if (!isPlaying || step > max) {
+      isPlaying = false;
+      playTimer = null;
+      btn.textContent = 'Replay growth';
+      return;
     }
-
-    updateReuseChart(step);
-    updateBudgetChart(step);
+    setStep(step);
     step++;
-    setTimeout(tick, 600);
+    playTimer = setTimeout(tick, 600);
   }
   tick();
+}
+
+function stopPlayback() {
+  isPlaying = false;
+  if (playTimer) clearTimeout(playTimer);
+  playTimer = null;
+  document.getElementById('play-btn').textContent = 'Replay growth';
 }
 
 load();
