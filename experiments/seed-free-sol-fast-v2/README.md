@@ -169,5 +169,9 @@ Open:
 Time 0 shows only the real persistent RootSolver. The blind bootstrap is a
 separate step, followed by cases in actual processing order. The animation
 filters nodes and edges by their observed creation step, so interleaved problem
-IDs cannot reveal future nodes. The detail panel exposes each upward abstraction
-chain, the thing-specific constituents, and the declared parent synthesis.
+IDs cannot reveal future nodes. For each problem, the detail panel exposes the
+upward abstraction chain, a nested tree reconstructed from the recorded
+parent-linked invocations, the thing-specific constituents, and the declared
+parent synthesis. Its allocation bars count the invocation records contained in
+each subtree; they are not token or compute budgets and do not recreate the
+superseded artifact's model-proposed marginal-value scores.

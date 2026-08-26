@@ -8,6 +8,26 @@
     :root{color-scheme:dark;--bg:#070a12;--panel:#101625;--line:#263044;--text:#e5e7eb;--muted:#94a3b8;--teal:#5eead4;--gold:#fbbf24;--violet:#c4b5fd}
     *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.45 system-ui,sans-serif}header{padding:14px 18px;border-bottom:1px solid var(--line);display:flex;gap:16px;align-items:center;flex-wrap:wrap}h1{font-size:19px;margin:0}.pills,.controls,.legend{display:flex;gap:7px;align-items:center;flex-wrap:wrap}.pill,button{border:1px solid #4b5870;border-radius:999px;padding:5px 9px;background:transparent;color:var(--text)}button{cursor:pointer}button:hover{border-color:var(--teal)}main{display:grid;grid-template-columns:minmax(0,1fr) 410px;height:calc(100vh - 62px)}.left{min-width:0;display:flex;flex-direction:column}.controls{padding:10px 14px;border-bottom:1px solid var(--line)}input[type=range]{width:min(520px,45vw)}.canvas{overflow:auto;flex:1;background:radial-gradient(circle at 45% 40%,#111a2d 0,#070a12 68%)}svg{display:block;min-width:100%;min-height:100%}.edge{fill:none;stroke-width:1.4;opacity:.58}.edge.composition{stroke:#60a5fa}.edge.specialization{stroke:var(--gold);stroke-dasharray:7 5;opacity:.84}.node rect{rx:8;stroke-width:1.5}.node text{fill:#fff;text-anchor:middle;font-size:10px;pointer-events:none}.node.root rect{fill:#5b21b6;stroke:var(--violet)}.node.composite rect{fill:#1e3a8a;stroke:#93c5fd}.node.solver rect{fill:#115e59;stroke:var(--teal)}.node.passive rect{fill:#4a2545;stroke:#f0abfc}.node.abstraction_parent rect{fill:#78350f;stroke:var(--gold)}.node{cursor:pointer}.right{overflow:auto;border-left:1px solid var(--line);background:var(--panel);padding:14px}.right h2{font-size:16px;margin:16px 0 6px}.right h2:first-child{margin-top:0}.muted{color:var(--muted)}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#090d17;border:1px solid var(--line);padding:9px;border-radius:7px}ol{padding-left:22px}.invocation,.ascent-step{padding:8px 0;border-bottom:1px solid var(--line)}.pathchain{color:#fde68a;background:#090d17;border:1px solid var(--line);padding:9px;border-radius:7px;overflow-wrap:anywhere}code{color:#bae6fd}.legend{padding:8px 14px;border-top:1px solid var(--line);color:var(--muted);font-size:12px}.swatch{width:11px;height:11px;border-radius:3px}.swatch.composite{background:#1e3a8a}.swatch.solver{background:#115e59}.swatch.passive{background:#4a2545}.swatch.abstraction_parent{background:#78350f}.error{color:#fca5a5}@media(max-width:900px){main{grid-template-columns:1fr;height:auto}.canvas{height:62vh}.right{border-left:0;border-top:1px solid var(--line)}input[type=range]{width:55vw}}
   </style>
+  <style>
+    .decomposition-note{margin:8px 0 10px;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:#090d17;color:var(--muted);font-size:11px;line-height:1.45}
+    .problem-tree{margin:8px 0 14px}
+    .tree-branch{position:relative;margin:0 0 8px 14px;padding-left:14px;border-left:1px solid #334155}
+    .tree-branch::before{content:"";position:absolute;left:-1px;top:17px;width:14px;border-top:1px solid #334155}
+    .tree-branch.root-branch{margin-left:0;padding-left:0;border-left:0}
+    .tree-branch.root-branch::before{display:none}
+    .tree-node{padding:8px 9px;border:1px solid #263044;border-radius:8px;background:#0b1120}
+    .tree-node.specific{border-color:#5eead4;box-shadow:0 0 0 1px rgba(94,234,212,.08)}
+    .tree-title{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;color:var(--text)}
+    .tree-title strong{font-size:12px;line-height:1.35}
+    .tree-share{flex:0 0 auto;color:#bae6fd;font:10px/1.3 ui-monospace,SFMono-Regular,Menlo,monospace}
+    .tree-badges{display:flex;gap:5px;flex-wrap:wrap;margin:5px 0}
+    .tree-badge{padding:1px 5px;border:1px solid #334155;border-radius:999px;color:var(--muted);font-size:9px;letter-spacing:.02em}
+    .tree-badge.create{border-color:#a16207;color:#fde68a}.tree-badge.reuse{border-color:#0f766e;color:#99f6e4}.tree-badge.composition{border-color:#1d4ed8;color:#bfdbfe}.tree-badge.specialization{border-color:#a16207;color:#fde68a}
+    .tree-contribution{color:#cbd5e1;font-size:11px;line-height:1.45}
+    .allocation-track{height:3px;margin:6px 0;background:#1e293b;border-radius:99px;overflow:hidden}
+    .allocation-fill{height:100%;background:linear-gradient(90deg,#5eead4,#60a5fa);border-radius:99px}
+    .tree-children{margin-top:8px}
+  </style>
 </head>
 <body>
   <header><h1>Fractal Intelligence — mandatory-abstraction Sol construction</h1><div id="meta" class="pills"></div></header>
@@ -36,6 +56,41 @@
     if(text.length<=23)return[text,''];
     let cut=text.lastIndexOf(' ',23);if(cut<8)cut=23;
     return[text.slice(0,cut),text.slice(cut).trim().slice(0,25)];
+  }
+
+  function invocationForest(caseRecord){
+    const entries=new Map(caseRecord.invocations.map((invocation,order)=>[invocation.id,{invocation,order,children:[],allocationSize:invocation.edge_kind==='root'?0:1}]));
+    const roots=[];
+    for(const entry of entries.values()){
+      const parent=entries.get(entry.invocation.parent_id);
+      if(parent&&parent!==entry)parent.children.push(entry);else roots.push(entry);
+    }
+    const count=(entry,active=new Set())=>{
+      if(active.has(entry.invocation.id))return 0;
+      const next=new Set(active);next.add(entry.invocation.id);
+      entry.allocationSize=(entry.invocation.edge_kind==='root'?0:1)+entry.children.reduce((sum,child)=>sum+count(child,next),0);
+      return entry.allocationSize;
+    };
+    roots.sort((a,b)=>a.order-b.order).forEach(root=>count(root));
+    for(const entry of entries.values())entry.children.sort((a,b)=>a.order-b.order);
+    return roots;
+  }
+
+  function renderInvocationTree(caseRecord,nodes){
+    const total=Math.max(1,caseRecord.invocations.filter(invocation=>invocation.edge_kind!=='root').length),specific=new Set(caseRecord.specific_constituent_invocations||[]),rootDimensions=new Set(Object.values(caseRecord.root_dimension_invocations||{}).flat());
+    const renderBranch=(entry,isRoot=false)=>{
+      const invocation=entry.invocation,node=nodes.get(invocation.node_id),share=entry.allocationSize/total*100;
+      const badges=[invocation.catalog_action,invocation.edge_kind];
+      if(specific.has(invocation.id))badges.push('specific constituent');
+      if(rootDimensions.has(invocation.id))badges.push('root dimension');
+      return `<div class="tree-branch${isRoot?' root-branch':''}"><div class="tree-node${specific.has(invocation.id)?' specific':''}">
+        <div class="tree-title"><strong>${esc(node?.name||invocation.node_id)}</strong><span class="tree-share">${entry.allocationSize}/${total}</span></div>
+        <div class="tree-badges">${badges.map((badge,index)=>`<span class="tree-badge ${index<2?esc(badge):''}">${esc(badge)}</span>`).join('')}</div>
+        <div class="allocation-track" title="${entry.allocationSize} of ${total} non-root invocation records in this subtree"><div class="allocation-fill" style="width:${share.toFixed(2)}%"></div></div>
+        <div class="tree-contribution">${esc(invocation.contribution)}</div>
+      </div>${entry.children.length?`<div class="tree-children">${entry.children.map(child=>renderBranch(child)).join('')}</div>`:''}</div>`;
+    };
+    return invocationForest(caseRecord).map(root=>renderBranch(root,true)).join('');
   }
 
   async function load(){
@@ -111,9 +166,9 @@
     if(current===1){host.innerHTML=`<h2>Blind bootstrap</h2><p>${esc(state.bootstrap.summary||'Sol-derived provisional topology.')}</p><p class="muted">Sol saw the fixed RootSolver contract but no problem text. The displayed children are its provisional decomposition of Problem Solving.</p>`;return}
     const c=state.cases[current-2],invocations=new Map(c.invocations.map(item=>[item.id,item])),ascentNames=c.abstraction_ascent.map(step=>nodes.get(step.node_id).name);
     const ascent=c.abstraction_ascent.map((step,index)=>`<div class="ascent-step"><strong>${esc(nodes.get(step.node_id).name)}</strong>${index<c.abstraction_ascent.length-1?` → ${esc(nodes.get(c.abstraction_ascent[index+1].node_id).name)}`:''}<br><span class="muted">${esc(step.why_more_general)}</span><br>${esc(step.reframing_effect)}</div>`).join('');
-    const constituents=c.specific_constituent_invocations.map(id=>invocations.get(id)).filter(Boolean),constituentRows=constituents.map(item=>`<li><strong>${esc(nodes.get(item.node_id).name)}</strong> — ${esc(item.contribution)}</li>`).join('');
+    const constituents=c.specific_constituent_invocations.map(id=>invocations.get(id)).filter(Boolean),constituentRows=constituents.map(item=>`<li><strong>${esc(nodes.get(item.node_id).name)}</strong> — ${esc(item.contribution)}</li>`).join(''),invocationTree=renderInvocationTree(c,nodes);
     const rows=c.invocations.map(item=>`<div class="invocation"><code>${esc(item.node_id)}</code> · ${esc(item.catalog_action)} · ${esc(item.edge_kind)}<br><strong>${esc(nodes.get(item.node_id).name)}:</strong> ${esc(item.contribution)}</div>`).join('');
-    host.innerHTML=`<h2>Problem ${c.problem_id}</h2><p class="muted">${esc(c.domain)}</p><p><strong>${esc(c.problem)}</strong></p><h2>Upward first</h2><p class="pathchain">${ascentNames.map(esc).join(' → ')}</p>${ascent}<h2>First-principles framing</h2><p>${esc(c.framing)}</p><h2>What the specific capability is made of</h2><ul>${constituentRows}</ul><h2>Emergent parent capability</h2><p>${esc(c.synthesis)}</p><h2>Proposed solution</h2><p>${esc(c.proposed_solution)}</p><details><summary>All ${c.invocations.length} invocations</summary>${rows}</details>`;
+    host.innerHTML=`<h2>Problem ${c.problem_id}</h2><p class="muted">${esc(c.domain)}</p><p><strong>${esc(c.problem)}</strong></p><h2>Upward first</h2><p class="pathchain">${ascentNames.map(esc).join(' → ')}</p>${ascent}<h2>First-principles framing</h2><p>${esc(c.framing)}</p><h2>Observed problem decomposition</h2><p class="decomposition-note"><strong>${c.invocations.length} recorded invocations.</strong> Each bar shows its subtree's share of the ${c.invocations.filter(invocation=>invocation.edge_kind!=='root').length} non-root records. This is observed planning allocation, not token or compute spend.</p><div class="problem-tree">${invocationTree}</div><h2>What the specific capability is made of</h2><ul>${constituentRows}</ul><h2>Emergent parent capability</h2><p>${esc(c.synthesis)}</p><h2>Proposed solution</h2><p>${esc(c.proposed_solution)}</p><details><summary>Flat record of all ${c.invocations.length} invocations</summary>${rows}</details>`;
   }
 
   function render(){
