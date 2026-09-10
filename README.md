@@ -27,7 +27,6 @@ The paper argues and probes this rather than proves it. Companion experiments pr
 - [`fractal-intelligence.tex`](fractal-intelligence.tex) / [`fractal-intelligence.pdf`](fractal-intelligence.pdf) — the paper
 - [`experiments/seed-free-sol-fast-v2/`](experiments/seed-free-sol-fast-v2/) — the **canonical current construction artifact**: a 100-problem mandatory-abstraction run with public prompt, controller, schema, audit, method-change record, structured outputs, graph state, and viewer; no private reasoning traces
 - [`prototype/`](prototype/) — the **superseded Gemini archive**, retained for reproducibility and error provenance; its unintended 29-node startup scaffold made the reported reuse seed-dominated
-- [`SEMANTIC_PRESERVATION.md`](SEMANTIC_PRESERVATION.md) — the concept-level regression checklist for future consolidation and claim-calibration passes
 - [`references.bib`](references.bib) — bibliography
 
 The companion [Fractal Intelligence Protocol](https://github.com/emergent-wisdom/fractal-intelligence-protocol) v0.2.0 is an experimental reference implementation of selected Solver-architecture mechanisms, including typed delegation, deterministic acceptance gates, the four-test procedure, reviewed mandatory-abstraction topology artifacts, and a matched-budget evaluation harness. It is an executable research substrate, not an outcome study.
