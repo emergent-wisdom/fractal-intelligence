@@ -1,7 +1,7 @@
 # Fractal Intelligence: Conceptual Decomposition as Problem-Solving Infrastructure
 
 [![Paper](https://img.shields.io/badge/Paper-PDF-red)](fractal-intelligence.pdf)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19462645.svg)](https://doi.org/10.5281/zenodo.19462645)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22693091.svg)](https://doi.org/10.5281/zenodo.22693091)
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
 This paper introduces **fractal intelligence** as a theoretical category: cumulative intelligence that recursively restructures problems into conceptual parts, preserves useful reasoning structures beyond the tasks that produced them, and reuses or revises those structures across problems, domains, and scales.
@@ -11,6 +11,8 @@ The paper then develops one possible realization. In the **Solver architecture**
 The paper argues and probes this rather than proves it. Companion experiments provide preliminary evidence about isolation and reframing; the canonical mandatory-abstraction construction demonstrates model-authored rooted graph construction and cross-domain structural reuse. A superseded seeded artifact is retained only for reproducibility and error provenance. The decisive tests are whether fresh conceptual carves outperform equally persistent conventional solving at matched compute and memory, whether independently derived carves reveal recurring invariants or complementary utility, and whether reuse improves subsequent problem solving. Should those tests succeed, retained solution structures could form an *internet of reasoning*.
 
 **Paper:** [`fractal-intelligence.pdf`](fractal-intelligence.pdf)
+
+**Current revision:** September 10, 2026 · [Zenodo](https://doi.org/10.5281/zenodo.22693091). [All versions](https://doi.org/10.5281/zenodo.19462645).
 
 ## Key Ideas
 
@@ -63,10 +65,10 @@ Material additions are recorded by edit date. Purely editorial changes are omitt
   title        = {Fractal Intelligence: Conceptual Decomposition as Problem-Solving Infrastructure},
   author       = {Westerberg, Henrik},
   year         = {2026},
-  month        = apr,
+  month        = sep,
   publisher    = {Zenodo},
-  doi          = {10.5281/zenodo.19462645},
-  url          = {https://doi.org/10.5281/zenodo.19462645}
+  doi          = {10.5281/zenodo.22693091},
+  url          = {https://doi.org/10.5281/zenodo.22693091}
 }
 ```
 

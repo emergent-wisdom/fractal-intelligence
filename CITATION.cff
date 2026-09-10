@@ -11,7 +11,7 @@ abstract: >-
   abstractions to a root before its specific capability is decomposed. A
   100-problem construction probes whether the resulting topology can be
   instantiated and structurally checked; it does not test solution quality.
-date-released: "2026-06-12"
+date-released: "2026-09-10"
 authors:
   - family-names: Westerberg
     given-names: Henrik
@@ -34,8 +34,9 @@ preferred-citation:
       given-names: Henrik
       orcid: "https://orcid.org/0009-0002-0496-2445"
   year: 2026
-  month: 4
+  month: 9
+  day: 10
   publisher:
     name: Zenodo
-  doi: 10.5281/zenodo.19462645
-  url: "https://doi.org/10.5281/zenodo.19462645"
+  doi: 10.5281/zenodo.22693091
+  url: "https://doi.org/10.5281/zenodo.22693091"
