@@ -1,7 +1,7 @@
 # Fractal Intelligence: Conceptual Decomposition as Problem-Solving Infrastructure
 
 [![Paper](https://img.shields.io/badge/Paper-PDF-red)](fractal-intelligence.pdf)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22693091.svg)](https://doi.org/10.5281/zenodo.22693091)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19462645.svg)](https://doi.org/10.5281/zenodo.19462645)
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
 This paper introduces **fractal intelligence** as a theoretical category: cumulative intelligence that recursively restructures problems into conceptual parts, preserves useful reasoning structures beyond the tasks that produced them, and reuses or revises those structures across problems, domains, and scales.
@@ -12,7 +12,7 @@ The paper argues and probes this rather than proves it. Companion experiments pr
 
 **Paper:** [`fractal-intelligence.pdf`](fractal-intelligence.pdf)
 
-**Current revision:** September 10, 2026 · [Zenodo](https://doi.org/10.5281/zenodo.22693091). [All versions](https://doi.org/10.5281/zenodo.19462645).
+**Current revision:** November 15, 2026, published on Zenodo under the all-versions DOI [10.5281/zenodo.19462645](https://doi.org/10.5281/zenodo.19462645), which resolves to the latest edition. The September 10, 2026 edition is [10.5281/zenodo.22693091](https://doi.org/10.5281/zenodo.22693091).
 
 ## Key Ideas
 
@@ -45,6 +45,14 @@ The companion [Fractal Intelligence Protocol](https://github.com/emergent-wisdom
 
 Material additions are recorded by edit date. Purely editorial changes are omitted; unlisted mechanisms and claims were present in the April 7, 2026 publication.
 
+**November 15, 2026 edit**
+- *Where structure comes from*: the abstract, Introduction and Conclusion state that problems are usually solved within a structure that is already there and that the method begins by finding the structure; the comparison table gains a row for it, the Introduction says what would change if the proposal works, and the matched test names the role-based team as the baseline for that change.
+- Task size (small and large tasks) added to the sample of the matched test.
+- One recorded ascent from the released construction and a table of its structural counts; the abstract, Introduction and Conclusion say what the construction was given and what it shows.
+- Statements about companion work corrected against those papers as published (the Sema demonstration, Temporal Hindsight Learning, the Meaning Model, Life Simulation); the Sema pattern table follows release 0.10.0; the author's papers are cited by all-versions DOI.
+- Typed rejection stated in *Gates That Redirect*; the synonymy limit named in *Scaffold Dependence and Independent Reproduction*; the Manifest reply in the transaction figure corrected.
+- Repetition removed: pointers that only name another section, sentences that restate one nearby, and prose lists that a table beside them already gives.
+
 **August 25, 2026 edit**
 - *Mandatory Abstraction Before Decomposition*: a specific-to-Root genus-and-differentia ascent with parent/sibling search, exact reverse traversal, typed specialization/composition edges, and explicit parent synthesis before the four-test carve.
 - A corrected 100-problem construction artifact using GPT-5.6 Sol, replacing the unintended seeded Gemini construction as the canonical demonstration and reported as a failure-inclusive structural probe rather than an outcome benchmark.
@@ -65,10 +73,10 @@ Material additions are recorded by edit date. Purely editorial changes are omitt
   title        = {Fractal Intelligence: Conceptual Decomposition as Problem-Solving Infrastructure},
   author       = {Westerberg, Henrik},
   year         = {2026},
-  month        = sep,
+  month        = nov,
   publisher    = {Zenodo},
-  doi          = {10.5281/zenodo.22693091},
-  url          = {https://doi.org/10.5281/zenodo.22693091}
+  doi          = {10.5281/zenodo.19462645},
+  url          = {https://doi.org/10.5281/zenodo.19462645}
 }
 ```
 
